@@ -4,7 +4,6 @@ const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
-
 const token = sessionStorage.getItem("token");
 // const token = localStorage.getItem("token");
 

@@ -6,7 +6,7 @@ export const createMember = (data) => {
   return async function (dispatch) {
     // console.log(data);
     await instance
-      .post("/users/login", data, {
+      .post("users/login", data, {
         "Content-Type": "application/json",
         withCredentials: true,
       })
@@ -29,7 +29,7 @@ export const createMember = (data) => {
 export const loginMember = (data) => {
   return async function (dispatch) {
     await instance
-      .post("members/login", data, {
+      .post("users/login", data, {
         "Content-Type": "application/json",
         withCredentials: true,
       })
