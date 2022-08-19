@@ -17,5 +17,7 @@ export default Footer;
 const FooterWrap = styled.div`
   width: 100%;
   border: 1px solid red;
+  position: fixed;
+  bottom: 0;
 
 `
