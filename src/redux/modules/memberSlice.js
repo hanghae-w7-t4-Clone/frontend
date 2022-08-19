@@ -4,13 +4,17 @@ import instance from "../../shered/request";
 
 export const createMember = (data) => {
   return async function (dispatch) {
-    // console.log(data);
+     console.log("Checking" + JSON.stringify(data));
     await instance
-      .post("/users/login", data, {
+      .post("/users/signup", data, 
+      {
         "Content-Type": "application/json",
         withCredentials: true,
-      })
+      }
+      )
       .then((response) => {
+
+        console.log("checking" + JSON.stringify(response))
         // console.log(response);
         // if (response.data.success === false) {
         //   return window.alert(response.data.err.msg);
@@ -19,9 +23,9 @@ export const createMember = (data) => {
         // }
       })
       .catch((error) => {
-        // if (error.response.status === 400) {
-        //   alert(error.response.data.message);
-        // }
+        if (error.response.status === 400) {
+          alert(error.response.data.message);
+        }
       });
   };
 };

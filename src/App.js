@@ -4,8 +4,12 @@ import Main from "./pages/Main";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Posts from "./pages/Posts";
+import { Provider } from "react-redux";
+import store from "./redux/config/configStore";
+
 const App = () => {
   return (
+    <Provider store={store}> 
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
@@ -14,6 +18,7 @@ const App = () => {
         <Route path="/posts" element={<Posts />} />
       </Routes>
     </BrowserRouter>
+    </Provider>
   );
 };
 
