@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import instance from "../../shered/request";
-
+import cookies from "react-cookies";
 
 export const createMember = (data) => {
   return async function (dispatch) {
@@ -13,9 +13,9 @@ export const createMember = (data) => {
       }
       )
       .then((response) => {
-
         console.log("checking" + JSON.stringify(response))
         // console.log(response);
+
         // if (response.data.success === false) {
         //   return window.alert(response.data.err.msg);
         // } else {
@@ -31,25 +31,28 @@ export const createMember = (data) => {
 };
 
 export const loginMember = (data) => {
+  console.log(data)
   return async function (dispatch) {
     await instance
-      .post("members/login", data, {
+      .post("/users/login", data, 
+      {
         "Content-Type": "application/json",
         withCredentials: true,
-      })
+      }
+      )
       .then((response) => {
         console.log(response);
-        // if (response.data.success === true) {
-        //   return (
-        //     sessionStorage.setItem("token", response.headers.authorization),
-        //     // cookies.save("refresh-token", response.headers["refresh-token"]),
-        //     sessionStorage.setItem("nickname", response.data.data.nickname),
-        //     alert(`${sessionStorage.nickname}님 환영합니다.`),
-        //     window.location.replace("/")
-        //   );
-        // } else {
-        //   return window.alert(response.data.error.msg);
-        // }
+        if (response.data.success === true) {
+          return (
+            sessionStorage.setItem("token", response.headers.authorization),
+            cookies.save("refresh-token", response.headers["refresh-token"])
+            // sessionStorage.setItem("nickname", response.data.data.nickname),
+            // alert(`${sessionStorage.nickname}님 환영합니다.`),
+            // window.location.replace("/")
+          );
+        } else {
+          return window.alert(response.data.error.message);
+        }
       })
       .catch((err) => {
         console.log(err);
