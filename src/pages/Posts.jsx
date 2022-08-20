@@ -1,8 +1,12 @@
 import React from 'react'
+import Header from '../components/Header'
 
 const Posts = () => {
   return (
-    <div>Posts</div>
+    <div>
+      <Header></Header>
+
+    </div>
   )
 }
 
