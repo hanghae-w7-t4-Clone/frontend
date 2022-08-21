@@ -13,7 +13,7 @@ export const createMember = (data) => {
       }
       )
       .then((response) => {
-        console.log("checking" + JSON.stringify(response))
+        // console.log("checking" + JSON.stringify(response))
         // console.log(response);
 
         // if (response.data.success === false) {
@@ -44,8 +44,10 @@ export const loginMember = (data) => {
         console.log(response);
         if (response.data.success === true) {
           return (
+            console.log(response),
             sessionStorage.setItem("token", response.headers.authorization),
-            cookies.save("refresh-token", response.headers["refresh-token"])
+            sessionStorage.setItem("nickname", response.data.data)
+            // cookies.save("refresh-token", response.headers["refresh-token"])
             // sessionStorage.setItem("nickname", response.data.data.nickname),
             // alert(`${sessionStorage.nickname}님 환영합니다.`),
             // window.location.replace("/")
@@ -60,8 +62,6 @@ export const loginMember = (data) => {
       });
   };
 };
-
-
 
 const initialState = {
   users: [],
