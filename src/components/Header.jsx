@@ -4,16 +4,16 @@ import styled from "styled-components";
 const Header = () => {
   return (
     <HeaderWrap>
-      <div class="nav-wrapper">
-        <img src="img/logo.PNG" class="brand-img" alt="" />
-        <input type="text" class="search-box" placeholder="검색" />
-        <div class="nav-items">
-          <img src="img/home.PNG" class="icon" alt="" />
-          <img src="img/messenger.PNG" class="icon" alt="" />
-          <img src="img/add.PNG" class="icon" alt="" />
-          <img src="img/explore.PNG" class="icon" alt="" />
-          <img src="img/like.PNG" class="icon" alt="" />
-          <div class="icon user-profile"></div>
+      <div className="nav-wrapper">
+        <img src="img/logo.PNG" className="brand-img" alt="" />
+        <input type="text" className="search-box" placeholder="검색" />
+        <div className="nav-items">
+          <img src="img/home.PNG" className="icon" alt="" />
+          <img src="img/messenger.PNG" className="icon" alt="" />
+          <img src="img/add.PNG" className="icon" alt="" />
+          <img src="img/explore.PNG" className="icon" alt="" />
+          <img src="img/like.PNG" className="icon" alt="" />
+          <div className="icon user-profile"></div>
         </div>
       </div>
     </HeaderWrap>

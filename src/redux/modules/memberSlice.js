@@ -45,13 +45,14 @@ export const loginMember = (data) => {
         if (response.data.success === true) {
           return (
             sessionStorage.setItem("token", response.headers.authorization),
-            cookies.save("refresh-token", response.headers["refresh-token"])
+            cookies.save("refresh-token", response.headers["refresh-token"]),
+            window.location.replace("/posts")
             // sessionStorage.setItem("nickname", response.data.data.nickname),
             // alert(`${sessionStorage.nickname}님 환영합니다.`),
-            // window.location.replace("/")
-          );
-        } else {
-          return window.alert(response.data.error.message);
+            );
+          } else {
+            return (window.alert(response.data.error.message),
+            window.location.replace("/"))
         }
       })
       .catch((err) => {
