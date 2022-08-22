@@ -5,7 +5,7 @@ import { FiSend } from "react-icons/fi";
 import { TbDots } from "react-icons/tb";
 import { FaRegSmile } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { __getPostsThuck } from '../redux/modules/postSlice.js'
 import { RESP } from "../dummyResponse.js";
 

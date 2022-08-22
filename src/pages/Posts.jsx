@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Header from '../components/Header'
 import Layout from '../components/Layout'
 
@@ -10,6 +10,9 @@ const Posts = () => {
   return (
     <div>      
       <Header/>
+      <Link to="/modal" state={{ background: location }}>
+        Open Modal
+      </Link>
       <Layout/>
     </div>
   )
