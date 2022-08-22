@@ -13,14 +13,14 @@ export const createMember = (data) => {
       }
       )
       .then((response) => {
-        // console.log("checking" + JSON.stringify(response))
-        // console.log(response);
+        console.log("checking" + JSON.stringify(response))
+        console.log(response);
 
-        // if (response.data.success === false) {
-        //   return window.alert(response.data.err.msg);
-        // } else {
-        //   return window.alert(`${response.data.data.nickname}님 회원가입을 축하드립니다!`), window.location.replace("/login");
-        // }
+        if (response.data.success === false) {
+          return window.alert(response.data.err.msg);
+        } else {
+          return window.alert(`${response.data.data.nickname}님 회원가입을 축하드립니다!`), window.location.replace("/login");
+        }
       })
       .catch((error) => {
         if (error.response.status === 400) {
@@ -49,7 +49,6 @@ export const loginMember = (data) => {
 
             sessionStorage.setItem("nickname", response.data.data),
             // cookies.save("refresh-token", response.headers["refresh-token"])
-
             cookies.save("refresh-token", response.headers["refresh-token"]),
             window.location.replace("/posts")
             // sessionStorage.setItem("nickname", response.data.data.nickname),

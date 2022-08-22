@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import ImgModal from "./ImgModal";
 import PostModal from "./PostModal";
+
 
 const Header = () => {
   const navigate = useNavigate()
 
   const [modal, setModal] = useState(false)
+
   const [modal2, setModal2] = useState(false)
   const [selectedPic, setSelectedPic] = useState(false)
+
 
   const logOut = () => {
     sessionStorage.clear();
@@ -40,6 +44,7 @@ const Header = () => {
       {/* Displaying double-Modal for file-upload and posting */}
       {modal? <ImgModal modal={modal} setModal={setModal} modal2={modal2} setModal2={setModal2} setSelectedPic={setSelectedPic}/> : ''}
       {modal2? <PostModal/> : ''}
+
     </HeaderWrap>
 
 
