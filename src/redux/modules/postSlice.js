@@ -4,11 +4,11 @@ import cookies from "react-cookies";
 
 export const __getPostsThuck = createAsyncThunk("GET_POST", async (payload, thunkAPI) => {
   try {
-    console.log(payload);
     const resp = await instance.get(`cards`);
     
     return (
-      console.log(resp)
+      console.log(resp.data.data),
+      thunkAPI.fulfillWithValue(resp.data.data)
     );
   } catch (err) {
     return thunkAPI.rejectWithValue(err.code);

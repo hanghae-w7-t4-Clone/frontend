@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "./Modal";
 
 const Header = () => {
+  const navigate = useNavigate()
+
+  const [modal, setModal] = useState(false)
+
+  const logOut = () => {
+    sessionStorage.clear();
+    // cookies.remove("refresh-token");
+    alert("로그아웃 되었습니다.")
+    window.location.replace("/");
+  }
+
   return (
     <HeaderWrap>
       <div className="nav-wrapper">
@@ -10,14 +23,22 @@ const Header = () => {
         <div className="nav-items">
           <img src="img/home.PNG" className="icon" alt="" />
           <img src="img/messenger.PNG" className="icon" alt="" />
-          <img src="img/add.PNG" className="icon" alt="" />
+          <img src="img/add.PNG" className="icon" alt="" onClick={() => {setModal(!modal)}}/>
           <img src="img/explore.PNG" className="icon" alt="" />
           <img src="img/like.PNG" className="icon" alt="" />
-          <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
+          
+          <ProfileImg onClick={()=>{navigate('/profile')}} src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
+        
           <div className="icon user-profile"></div>
         </div>
+        <button onClick={logOut}>로그아웃</button>
       </div>
+
+      {modal ? <Modal modal={modal} setModal={setModal}/> : ''}
+      
     </HeaderWrap>
+
+
   );
 };
 
