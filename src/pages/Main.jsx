@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginMember } from "../redux/modules/memberSlice";
+import { FaFacebookSquare } from "react-icons/fa";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const Main = () => {
 
   const handChange = (event) => {
     const { name, value } = event.target;
-    // console.log(name, value)
+    console.log(name, value)
     setMember({ ...member, [name]: value });
 
     console.log("Checking here " + event.target)
@@ -64,10 +65,10 @@ const Main = () => {
                 <div></div>
               </Separator>
               <Other>
-                <FaceBookBtn className="fb-login-btn" type="button">
-                  <i className="fa fa-facebook-official fb-icon"></i>
-                  <span className="">Facebook으로 로그인</span>
-                </FaceBookBtn>
+                <FaceBookBtn type="button">
+                    <FaFacebookSquare />&nbsp;&nbsp;
+                    <span>Facebook으로 로그인</span>
+                </FaceBookBtn> 
                 <a className="forgotPassword" href="#">
                   비밀번호를 잊으셨나요?
                 </a>
@@ -181,7 +182,7 @@ const Field = styled.div`
     box-sizing: border-box;
     background-color: #f3f3f3;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid #c1c1c1;
     height: 33px;
     
   }
@@ -203,6 +204,7 @@ const LoginBtn = styled.button`
 `;
 
 const FaceBookBtn = styled.button`
+  width: 65%;
   margin: 1rem;
   border: 0;
   cursor: pointer;

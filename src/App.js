@@ -9,7 +9,7 @@ import store from "./redux/config/configStore";
 
 const App = () => {
   return (
-    <Provider store={store}> 
+    // <Provider store={store}> 
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/posts" element={<Posts />} />
       </Routes>
     </BrowserRouter>
-    </Provider>
+    // </Provider>
   );
 };
 
