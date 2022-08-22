@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // styled-component
 import styled from "styled-components";
@@ -7,27 +7,36 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 // Redux
 import { useSelector } from 'react-redux';
+import {postCmtThunk} from "../redux/modules/commentSlice";
 
 const DeetsModal = (props) => {
+
+    // Hook 
+    const [comment, setComment] = useState("")
 
     // Retrieving user profile
     const userProf = useSelector((state) => state.profile);
   
-    // console.log("Hello userProf Check " + JSON.stringify(userProf.profPics))
+    console.log("Hello userProf Check " + JSON.stringify(userProf.profPics))
+    
+    const onChangeHandler = (e) => {
+        setComment(e.target.value)
+      };
 
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        console.log("Hello checking here !")
+    };
+
+    // If-statement for modal
     if(!props.show){
         return null
     }
 
-    // Requesting Comment Info
-    // dispatch(getCmtThunk(props.id));
-    // console.log("Checking props " + JSON.stringify(props)) 
-
-
     return (
  
         <ModalCon>
-                {/* {console.log(userProf.profInfo.nickname)} */}
+                {console.log("Checking " + comment)}
             <ModalContent>
                 <ModalLeft>
                     <ModalImg src={props.img} alt="modalPic" />
@@ -37,12 +46,19 @@ const DeetsModal = (props) => {
                         <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
                         <ModalTitle>{userProf.profInfo.nickname}</ModalTitle>
                     </ModalHeader>
-                    <ModalBody>
-                        This is modal content
-                     
+                    <ModalBody>           
                     </ModalBody>
                     <ModalFooter>
-                        <input type="text" />
+                    <form onClick={onSubmitHandler}>
+                        <input 
+                            type="text"
+                            placeholder="코멘트를 작성해주세요"
+                            name="comment"
+                            value={comment}
+                            onChange={onChangeHandler}
+                        /> 
+                        <button type="submit">Post</button>
+                    </form>
                     </ModalFooter>
                 </ModalRight>
             </ModalContent>
@@ -93,7 +109,9 @@ const ModalFooter = styled.div`
     position: absolute;
     bottom: 0;
     width: 100%;
+    padding: 3%;
     right: 0;
+    border-top: 0.5px solid grey;
 `;
 
 const ModalTitle = styled.h4`
