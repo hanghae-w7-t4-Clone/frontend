@@ -16,6 +16,7 @@ const ProfPics = () => {
     
 	// Hook for modal
 	const [showModal, setShowModal] = useState(false);
+	
 	const [selectedProfPics, setSelectedProfPics] = useState({
 		selectedImgSrc: '',
 		selectedCardId: '',
