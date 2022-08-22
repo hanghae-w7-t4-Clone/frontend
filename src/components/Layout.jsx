@@ -15,7 +15,7 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const [isLike, setIslike] = useState(false);
-  const defalutImg = 'https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg'
+  const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
 
   const likeHander = () => {
     setIslike(!isLike);
@@ -30,7 +30,7 @@ const Layout = () => {
       <CardsWrap>
         {posts.map((el) => {
           return (
-            <Card>
+            <Card key={el.id}>
               <TopWrap>
                 <ProfileImgNickname>
                   <ProfileImg src={el.profilePhoto} alt="" />
@@ -52,18 +52,22 @@ const Layout = () => {
               <div>
                 <LikeNameWrap>
                   <ProfileImgSmall src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-                  <span>
-                    <b>{el.nickname}</b>님
-                  </span>
-                  {el.likeCount !== 0 ? (`외 ${el.likeCount} 명이 좋아합니다.`): `제일 먼저 좋아요를 눌러보세요`}
+
+                  {el.likeCount !== 0 ? (
+                    <span>
+                      <b>{el.nickname}</b>님 외 {el.likeCount} 명이 좋아합니다.
+                    </span>
+                  ) : (
+                    `제일 먼저 좋아요를 눌러보세요`
+                  )}
                 </LikeNameWrap>
                 <NickConstentWrap>
                   <span>
-                    <b>닉네임</b>
+                    <b>{el.nickname}</b>
                   </span>
-                  <p style={{ width: "85%", margin: "0" }}>여기에 콘텐츠 내용 만약에 컨텐츠 내용이 길다면...</p>
+                  <p style={{ width: "85%", margin: "0" }}>{el.content}</p>
                 </NickConstentWrap>
-                <RipleCnt>댓글 {el.likeCount}개 모두보기</RipleCnt>
+                <RipleCnt>{el.likeCount === 0 ? "댓글을 남겨보세요" : `댓글 ${el.likeCount}개 모두보기`}</RipleCnt>
                 <RiplePost>
                   <span>
                     <b>{el.nickname}</b>
@@ -169,14 +173,15 @@ const ProfileImgNickname = styled.div`
 `;
 const CardsWrap = styled.div`
   width: 470px;
-  border: #dfdfdf solid 1px;
-  border-radius: 5px;
 `;
 
 const Card = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
+  border: #dfdfdf solid 1px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 `;
 
 const IconBox = styled.div`
