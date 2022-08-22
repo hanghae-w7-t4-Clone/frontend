@@ -20,10 +20,13 @@ const Main = () => {
     const { name, value } = event.target;
     console.log(name, value)
     setMember({ ...member, [name]: value });
+
+    console.log("Checking here " + event.target)
   };
 
   const handSubmit = (event) => {
     console.log(event);
+    console.log("Checking login")
     event.preventDefault();
     dispatch(
       loginMember({

@@ -13,7 +13,7 @@ export const createMember = (data) => {
       }
       )
       .then((response) => {
-        console.log("checking" + JSON.stringify(response))
+        // console.log("checking" + JSON.stringify(response))
         // console.log(response);
 
         // if (response.data.success === false) {
@@ -44,7 +44,12 @@ export const loginMember = (data) => {
         console.log(response);
         if (response.data.success === true) {
           return (
+            console.log(response),
             sessionStorage.setItem("token", response.headers.authorization),
+
+            sessionStorage.setItem("nickname", response.data.data),
+            // cookies.save("refresh-token", response.headers["refresh-token"])
+
             cookies.save("refresh-token", response.headers["refresh-token"]),
             window.location.replace("/posts")
             // sessionStorage.setItem("nickname", response.data.data.nickname),
@@ -61,8 +66,6 @@ export const loginMember = (data) => {
       });
   };
 };
-
-
 
 const initialState = {
   users: [],
