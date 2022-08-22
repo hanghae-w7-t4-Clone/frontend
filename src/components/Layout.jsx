@@ -33,7 +33,7 @@ const Layout = () => {
             <Card>
               <TopWrap>
                 <ProfileImgNickname>
-                  <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
+                  <ProfileImg src={el.profilePhoto} alt="" />
                   <Nickname>{el.nickname}</Nickname>
                 </ProfileImgNickname>
                 <IconBox>
@@ -53,9 +53,9 @@ const Layout = () => {
                 <LikeNameWrap>
                   <ProfileImgSmall src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
                   <span>
-                    <b>여기에 닉네임</b>님
-                  </span>{" "}
-                  외 7명이 좋아합니다.
+                    <b>{el.nickname}</b>님
+                  </span>
+                  {el.likeCount !== 0 ? (`외 ${el.likeCount} 명이 좋아합니다.`): `제일 먼저 좋아요를 눌러보세요`}
                 </LikeNameWrap>
                 <NickConstentWrap>
                   <span>
@@ -63,14 +63,14 @@ const Layout = () => {
                   </span>
                   <p style={{ width: "85%", margin: "0" }}>여기에 콘텐츠 내용 만약에 컨텐츠 내용이 길다면...</p>
                 </NickConstentWrap>
-                <RipleCnt>댓글 3개 모두보기</RipleCnt>
+                <RipleCnt>댓글 {el.likeCount}개 모두보기</RipleCnt>
                 <RiplePost>
                   <span>
-                    <b>닉네임</b>
+                    <b>{el.nickname}</b>
                   </span>
-                  <span>여기에 댓글 내용</span>
+                  <span>{el.content}</span>
                 </RiplePost>
-                <PostDate>게시된 날짜 표시</PostDate>
+                <PostDate>{el.createdAt}</PostDate>
                 <RipleInputForm>
                   <FaRegSmile size="24" />
                   <input type="text" />
