@@ -10,9 +10,6 @@ const Posts = () => {
   return (
     <div>      
       <Header/>
-      <Link to="/modal" state={{ background: location }}>
-        Open Modal
-      </Link>
       <Layout/>
     </div>
   )

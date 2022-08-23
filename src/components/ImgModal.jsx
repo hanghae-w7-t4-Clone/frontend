@@ -29,6 +29,7 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic}) => {
   }
 
   // Send a img to server
+
   const onPostingHandler = async (e) => {
  
     e.preventDefault();

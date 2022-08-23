@@ -5,17 +5,26 @@ import { FiSend } from "react-icons/fi";
 import { TbDots } from "react-icons/tb";
 import { FaRegSmile } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { __getPostsThuck } from "../redux/modules/postSlice.js";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { __getDetailThuck, __getPostsThuck, __getRecommendThuck } from "../redux/modules/postSlice.js";
+import DetailModal from "./DetailModal.jsx";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
-  // console.log(posts);
+
+  const detail = useSelector((state) => state.posts.detail);
+  const recommend = useSelector((state) => state.posts.newUsers);
+
+  // console.log(posts, detail);
+  console.log(recommend);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isLike, setIslike] = useState(false);
-  const defalutImg = 'https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg'
+  const [detailModal, setDetailModal] = useState(false);
+
+  const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
 
   const likeHander = () => {
     setIslike(!isLike);
@@ -23,14 +32,19 @@ const Layout = () => {
 
   useEffect(() => {
     dispatch(__getPostsThuck());
+    dispatch(__getRecommendThuck());
   }, [dispatch]);
+
+  const getDetail = (id) => {
+    dispatch(__getDetailThuck(id));
+  };
 
   return (
     <LayoutWrap>
       <CardsWrap>
         {posts.map((el) => {
           return (
-            <Card>
+            <Card key={el.id}>
               <TopWrap>
                 <ProfileImgNickname>
                   <ProfileImg src={el.profilePhoto} alt="" />
@@ -52,25 +66,37 @@ const Layout = () => {
               <div>
                 <LikeNameWrap>
                   <ProfileImgSmall src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-                  <span>
-                    <b>{el.nickname}</b>님
-                  </span>
-                  {el.likeCount !== 0 ? (`외 ${el.likeCount} 명이 좋아합니다.`): `제일 먼저 좋아요를 눌러보세요`}
+
+                  {el.likeCount !== 0 ? (
+                    <span>
+                      <b>{el.nickname}</b>님 외 {el.likeCount} 명이 좋아합니다.
+                    </span>
+                  ) : (
+                    `제일 먼저 좋아요를 눌러보세요`
+                  )}
                 </LikeNameWrap>
                 <NickConstentWrap>
                   <span>
-                    <b>닉네임</b>
+                    <b>{el.nickname}</b>
                   </span>
-                  <p style={{ width: "85%", margin: "0" }}>여기에 콘텐츠 내용 만약에 컨텐츠 내용이 길다면...</p>
+                  <p style={{ width: "85%", margin: "0" }}>{el.content}</p>
                 </NickConstentWrap>
-                <RipleCnt>댓글 {el.likeCount}개 모두보기</RipleCnt>
+                <RipleCnt
+                  onClick={() => {
+                    getDetail(el.id);
+                    setDetailModal(!detailModal);
+                  }}
+                >
+                  {" "}
+                  {el.commentCount === 0 ? "댓글을 남겨보세요" : `댓글 ${el.commentCount}개 모두보기`}
+                </RipleCnt>
                 <RiplePost>
                   <span>
                     <b>{el.nickname}</b>
                   </span>
                   <span>{el.content}</span>
                 </RiplePost>
-                <PostDate>{el.createdAt}</PostDate>
+                <PostDate>{el.createdAt.split("T").at(0) + " " + el.createdAt.split("T").at(1).split(".").at(0)}</PostDate>
                 <RipleInputForm>
                   <FaRegSmile size="24" />
                   <input type="text" />
@@ -80,6 +106,8 @@ const Layout = () => {
             </Card>
           );
         })}
+
+        <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}></DetailModal>
       </CardsWrap>
 
       <RightBarWrap>
@@ -100,43 +128,21 @@ const Layout = () => {
         </RightBarMid>
 
         <div>
-          <Recommended>
-            <RiplePost>
-              <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-              <span>
-                <b>닉네임</b>
-              </span>
-            </RiplePost>
-            <BlueBtn>팔로우</BlueBtn>
-          </Recommended>
-          <Recommended>
-            <RiplePost>
-              <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-              <span>
-                <b>닉네임</b>
-              </span>
-            </RiplePost>
-            <BlueBtn>팔로우</BlueBtn>
-          </Recommended>
-          <Recommended>
-            <RiplePost>
-              <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-              <span>
-                <b>닉네임</b>
-              </span>
-            </RiplePost>
-            <BlueBtn>팔로우</BlueBtn>
-          </Recommended>
-          <Recommended>
-            <RiplePost>
-              <ProfileImg src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-              <span>
-                <b>닉네임</b>
-              </span>
-            </RiplePost>
-            <BlueBtn>팔로우</BlueBtn>
-          </Recommended>
+          {recommend.map((el) => {
+            return (
+              <Recommended>
+                <RiplePost>
+                  <ProfileImg src={el.profilePhoto} alt="" />
+                  <span>
+                    <b>{el.nickname}</b>
+                  </span>
+                </RiplePost>
+                <BlueBtn>팔로우</BlueBtn>
+              </Recommended>
+            );
+          })}
         </div>
+        
 
         <RightBarBottom>
           <div>소개. 도움말. 홍보 센터. API. 채용정보.</div>
@@ -169,14 +175,15 @@ const ProfileImgNickname = styled.div`
 `;
 const CardsWrap = styled.div`
   width: 470px;
-  border: #dfdfdf solid 1px;
-  border-radius: 5px;
 `;
 
 const Card = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
+  border: #dfdfdf solid 1px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 `;
 
 const IconBox = styled.div`
