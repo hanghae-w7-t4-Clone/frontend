@@ -11,6 +11,7 @@ import DetailModal from "./DetailModal.jsx";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
+
   const detail = useSelector((state) => state.posts.detail);
   const recommend = useSelector((state) => state.posts.newUsers);
 

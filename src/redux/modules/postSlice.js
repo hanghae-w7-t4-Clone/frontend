@@ -1,21 +1,36 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "../../shered/request";
-import cookies from "react-cookies";
 
+/** 게시글 전체조희 */
+export const __getPostsThuck = createAsyncThunk(
+  "GET_POST", async (payload, thunkAPI) => {
 
-/** 게시글 전체 조회 */
-export const __getPostsThuck = createAsyncThunk("GET_POST", async (payload, thunkAPI) => {
   try {
     const resp = await instance.get(`cards`);
-    
     return (
-      console.log(resp.data.data),
+      // console.log(resp.data.data),
       thunkAPI.fulfillWithValue(resp.data.data)
     );
   } catch (err) {
     return thunkAPI.rejectWithValue(err.code);
   }
 });
+
+/** 사진 등록 */
+export const __imgPostsThuck = createAsyncThunk(
+  "IMG_POST", async (payload, thunkAPI) => {
+  try {
+    console.log("Checking here")
+    const resp = await instance.post('/auth/photos', payload, { "Content-Type": "multipart/form-data"});
+    return (
+      // console.log(resp)
+      // thunkAPI.fulfillWithValue(resp.data.data)
+      thunkAPI.fulfillWithValue(resp.data.data)
+      )
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.code);
+    }
+  });
 
 /** 게시물 상세 조회 */
 export const __getDetailThuck = createAsyncThunk("GET_DETAIL", async (payload, thunkAPI) => {
@@ -25,11 +40,28 @@ export const __getDetailThuck = createAsyncThunk("GET_DETAIL", async (payload, t
     return (
       thunkAPI.fulfillWithValue(resp.data.data)
     );
+
   } catch (err) {
     return thunkAPI.rejectWithValue(err.code);
   }
 });
 
+/** 게시물 등록 */
+export const __sendPostsThuck = createAsyncThunk(
+  "SEND_POST", async (payload, thunkAPI) => {
+  try {
+    console.log("Hello " + JSON.stringify(payload))
+    const resp = await instance.post('/auth/cards', payload, { "Content-Type": "application/json"});
+    return (
+      console.log(resp)
+      // console.log(resp)
+      // thunkAPI.fulfillWithValue(resp.data.data)
+      // thunkAPI.fulfillWithValue(resp.data.data)
+      )
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.code);
+    }
+  });
 
 /** 게시물 수정 */
 export const __getUpdateThuck = createAsyncThunk("UPDATE_POST", async (payload, thunkAPI) => {
@@ -78,7 +110,8 @@ export const __getRecommendThuck = createAsyncThunk("DELETE_POST", async (payloa
 const initialState = {
   posts: [],
   detail: [],
-  newUsers: []
+  newUsers: [],
+  postImgUrl: ""
 };
 
 const postSlice = createSlice({
@@ -86,13 +119,25 @@ const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+
+    /** 게시글 전체조희 */
     [__getPostsThuck.fulfilled]: (state, action) => {
-      console.log(action)
+      // console.log(action)
       state.posts = action.payload;
     },
     [__getPostsThuck.rejected]: (state, action) => {
       state.error = action.payload;
     },
+
+    /** 사진 등록 */
+    [__imgPostsThuck.fulfilled]: (state, action) => {
+      state.postImgUrl = action.payload;
+    },
+    [__imgPostsThuck.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
+
+    /** 게시물 상세 조회 */
     [__getDetailThuck.fulfilled]: (state, action) => {
       console.log(action)
       state.detail = action.payload;
@@ -101,6 +146,7 @@ const postSlice = createSlice({
       state.error = action.payload;
     },
 
+    /** 게시물 수정 */
     [__getUpdateThuck.fulfilled]: (state, action) => {
       console.log(action)
       state.posts = action.payload;
@@ -109,6 +155,7 @@ const postSlice = createSlice({
       state.error = action.payload;
     },
     
+    /** 게시물 삭제 */
     [__getDeleteThuck.fulfilled]: (state, action) => {
       console.log(action)
       state.posts = action.payload;
@@ -116,6 +163,8 @@ const postSlice = createSlice({
     [__getDeleteThuck.rejected]: (state, action) => {
       state.error = action.payload;
     },
+
+    /** 신규 가입자 추천목록 */
     [__getRecommendThuck.fulfilled]: (state, action) => {
       console.log(action)
       state.newUsers = action.payload;

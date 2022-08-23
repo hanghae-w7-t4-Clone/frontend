@@ -1,61 +1,46 @@
-import React, {useState } from "react";
+import React, {useState, useRef} from "react";
 import styled from "styled-components";
 import CloseButton from "react-bootstrap/CloseButton";
+import { useDispatch} from "react-redux";
+import {__imgPostsThuck} from "../redux/modules/postSlice.js";
 
 const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic}) => {
 
-  // if(!modal){
-  //   return null
-  // }
+  // Redux
+  const dispatch = useDispatch();
 
-  
-  const initialState = {
-    imgUrls : '' 
-  };
+  // useRef
+  const fileInputRef=useRef();
+
 
   // Hook to save file
   const [attachment, setAttachment] = useState("");
 
   const saveFileImage = (e) => {
     setAttachment(URL.createObjectURL(e.target.files[0]));
-    console.log(e.target.files[0])
+  
   };
 
+  // enabling 1st modal to 2nd modal
   const nextModal = () => {
     setModal2(!modal2)
+    setModal(!modal)
     setSelectedPic(attachment)
   }
 
-  
-  // 저장함수
+  // Send a img to server
+
   const onPostingHandler = async (e) => {
-    // if (
-    //   upLoad.title === "" ||
-    //   upLoad.descript === ""
-    // ) {
-    //   alert("빈칸을 다 채워주세요.");
-    //   return;
-    // }
+ 
     e.preventDefault();
     let frm = new FormData();
     let postimage = document.getElementById("img_file");
-    // frm.append(
-    //   "data",
-    //   new Blob([JSON.stringify(upLoad)], { type: "application/json" })
-    // );
-    console.log(postimage)
-    frm.append("image", postimage.files[0]);
-    console.log(frm)
-      // try {
-      //   const response = await dispatch(postPostThunk(frm))
-      //   if(response){
-      //     alert("글작성 성공");
-      //     navigate(`/`)
-      //   }
-      // }
-      // catch (error){
-      //   console.log(error)
-      // }
+ 
+    frm.append("photoList", postimage.files[0]);
+
+    dispatch(__imgPostsThuck(frm))
+
+    nextModal(!modal2)
   };
 
 
@@ -65,13 +50,18 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic}) => {
       {/* {console.log("Checking attachment " + attachment)} */}
       
       <ModalBox>
-      <Img src={attachment} alt="hello this is img"/> 
-        <h1>this is first modal</h1>      
-        <form encType="multipart/form-data" onSubmit={onPostingHandler}>
-        <h3>Modal</h3>
-        <input type="file" id="img_file" accept="image/*" onChange={saveFileImage}/>
-        <button type="submit" onClick={() => {nextModal(!modal2)}} >다음</button>
-        </form>
+      {/* <Img src={attachment} alt="hello this is img"/>  */}
+        {/* <h1>this is first modal</h1> */}
+        <ImgForm onSubmit={onPostingHandler}>
+        <FormCon>
+        <Img src={attachment} alt=""></Img>
+        {/* <Img src="img/upload.PNG" alt="" />   */}
+        <ImgBtn type="button" onClick={()=>fileInputRef.current.click()}>Upload a file</ImgBtn>
+        <input onChange={saveFileImage} ref={fileInputRef} type="file" id="img_file" accept="image/*" hidden/>    
+        <NextBtn type="submit">다음</NextBtn>
+        </FormCon>
+        {/* <button type="button" onClick={() => {nextModal(!modal2)}}>다음으로</button> */}
+        </ImgForm>
       </ModalBox>
 
       {/* modal => true */}
@@ -102,6 +92,47 @@ const ModalBox = styled.div`
 `;
 
 const Img = styled.img`
-  width: 60%;
-  height: 60%;
+  margin: auto;
+  display: flex;
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  text-align:center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+
 `
+const ImgForm = styled.form`
+  width: 100%;
+  /* display: flex;
+  justify-content: center;
+  position: relative; */
+  /* display: inline-block; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`
+
+const FormCon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const ImgBtn = styled.button`
+  width: 135px;
+  height: 30px;
+  top: 0;
+  left: 0;
+  position: relative;
+  `
+
+  const NextBtn = styled.button`
+   top:0;
+   right:0;
+   position: absolute;
+  `
+
+
