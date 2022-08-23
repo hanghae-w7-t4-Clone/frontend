@@ -8,6 +8,7 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic}) => {
   //   return null
   // }
 
+  
   const initialState = {
     imgUrls : '' 
   };
@@ -25,6 +26,7 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic}) => {
     setSelectedPic(attachment)
   }
 
+  
   // 저장함수
   const onPostingHandler = async (e) => {
     // if (
