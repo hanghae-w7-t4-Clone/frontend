@@ -10,7 +10,7 @@ import { __getPostsThuck } from "../redux/modules/postSlice.js";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
-  console.log(posts);
+  // console.log(posts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

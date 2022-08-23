@@ -13,6 +13,7 @@ const Header = () => {
 
   const [modal2, setModal2] = useState(false)
   const [selectedPic, setSelectedPic] = useState(false)
+  const [getImgUrl, setGetImgUrl] = useState("")
 
 
   const logOut = () => {
@@ -43,7 +44,7 @@ const Header = () => {
 
       {/* Displaying double-Modal for file-upload and posting */}
       {modal? <ImgModal modal={modal} setModal={setModal} modal2={modal2} setModal2={setModal2} setSelectedPic={setSelectedPic}/> : ''}
-      {modal2? <PostModal/> : ''}
+      {modal2? <PostModal modal2={modal2} setModal2={setModal2} selectedPic={selectedPic}/> : ''}
 
     </HeaderWrap>
 

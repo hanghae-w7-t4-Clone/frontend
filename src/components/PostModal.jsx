@@ -1,32 +1,83 @@
 import styled from "styled-components";
-import React from 'react';
+import React, { useState } from "react";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { __sendPostsThuck } from "../redux/modules/postSlice";
 
 import CloseButton from "react-bootstrap/CloseButton";
 
-const PostModal = () => {
-    return (
-        <ModalCon>
-        {/* { console.log("Checking postimage " + JSON.stringify(postimage))} */}
-        {/* {console.log("Checking attachment " + attachment)} */}
-        
-        <ModalBox>
-        <Img alt="hello this is img"/> 
-          <h1>Hello this is modal2</h1>      
-          <form encType="multipart/form-data">
-          <h3>Modal</h3>
-          <input type="file" id="img_file" accept="image/*"/>
-          <button type="submit">다음</button>
-          </form>
-        </ModalBox>
+const PostModal = ({ modal2, setModal2, selectedPic }) => {
   
-        {/* modal => true */}
-        <CloseButton style={{ position: "absolute", top: 0, right: 0, width: "50px", height: "50px", padding: 0}}/>
-      </ModalCon>
-    );
+  // Dispatch
+  const dispatch = useDispatch();
+
+  const [post, setPost] = useState({
+    content: "",
+    place: ""
+  });
+
+  const postInfo = useSelector((state) => state.posts);
+
+  console.log("Checking postInfo " + JSON.stringify(postInfo.postImgUrl[0]));
+  console.log(typeof postInfo.postImgUrl[0])
+
+  const onSignUpHandler = (event) => {
+    // console.log(event.target.value);
+    // console.log(event.target.name);
+    const { name, value } = event.target;
+    setPost({ ...post, [name]: value });
+    // console.log("This is content " + post.content)
+    // console.log("This is place" + post.place)
+  };
+
+  const submitPostInfo = (e) => {
+    e.preventDefault();
+    dispatch(
+      __sendPostsThuck({
+        imgUrlList: [postInfo.postImgUrl[0]],
+        content: post.content,
+        place: post.place
+      })
+    )
+  };
+
+  return (
+    <ModalCon>
+      <ModalBox>
+        <Img src={selectedPic} alt="hello this is img" />
+        <h1>Hello this is modal2</h1>
+        <form onSubmit={submitPostInfo}>
+          <h3>Modal</h3>
+          <input
+            placeholder="content"
+            name="content"
+            onChange={onSignUpHandler}
+          />
+          <input placeholder="place" name="place" onChange={onSignUpHandler} />
+          <button type="submit">Post</button>
+        </form>
+      </ModalBox>
+
+      {/* modal => true */}
+      <CloseButton
+        onClick={() => {
+          setModal2(!modal2);
+        }}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "50px",
+          height: "50px",
+          padding: 0,
+        }}
+      />
+    </ModalCon>
+  );
 };
 
 export default PostModal;
-
 
 const ModalCon = styled.div`
   position: fixed;
@@ -50,4 +101,4 @@ const ModalBox = styled.div`
 const Img = styled.img`
   width: 60%;
   height: 60%;
-`
+`;
