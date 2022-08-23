@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CloseButton from "react-bootstrap/CloseButton";
-
 // Redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postCmtThunk } from "../redux/modules/commentSlice";
+import { __getDetailThuck } from "../redux/modules/postSlice";
 
 const DeetsModal = (props) => {
   const defaultProfileImg = "img/basicprofile.png";
+  
+
+  console.log(props.detail)
   // Hook
   const [comment, setComment] = useState("");
 
+  
   const onChangeHandler = (e) => {
     setComment(e.target.value);
   };
@@ -21,7 +25,7 @@ const DeetsModal = (props) => {
   };
 
   if (!props.show) {
-    return null;
+    return '';
   }
 
   return (
@@ -29,7 +33,7 @@ const DeetsModal = (props) => {
       {console.log("Checking " + comment)}
       <ModalBox>
         <ModalLeft>
-          <ModalImg src={props.detail.imgUrlList} alt="modalPic" />
+          <ModalImg src={props.detail.imgUrlList[0]} alt="modalPic" />
         </ModalLeft>
         <ModalRight>
           <ModalHeader>
@@ -44,7 +48,16 @@ const DeetsModal = (props) => {
             </ModalContent>
             <div>{props.detail.createdAt}</div>
             <div>{props.detail.place}</div>
-            <div>{props.detail.commentResponseDto}</div>
+            {props.detail.commentResponseDto.map((el)=>{
+              return (
+              <div key={el.id}>
+                <div>{el.nickname}</div>
+                <div>{el.content}</div>
+                <div>{el.likeCount}</div>
+                <div></div>
+              </div>)
+
+            })}
           </ModalBody>
 
           <ModalFooter>

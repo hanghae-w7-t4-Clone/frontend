@@ -5,50 +5,72 @@ import styled from "styled-components";
 import ImgModal from "./ImgModal";
 import PostModal from "./PostModal";
 
-
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [selectedPic, setSelectedPic] = useState(false);
 
-  const [modal2, setModal2] = useState(false)
-  const [selectedPic, setSelectedPic] = useState(false)
-  const [getImgUrl, setGetImgUrl] = useState("")
+  const [toggle, setToggle] = useState(false);
 
+  const clickToggle = () => {
+    setToggle(!toggle);
+  };
+
+  const myProfileImg = sessionStorage.getItem("profileImg");
 
   const logOut = () => {
     sessionStorage.clear();
     // cookies.remove("refresh-token");
-    alert("로그아웃 되었습니다.")
+    alert("로그아웃 되었습니다.");
     window.location.replace("/");
-  }
+  };
 
   return (
-    <HeaderWrap>
-      <div className="nav-wrapper">
-        <img src="img/logo.PNG" className="brand-img" alt="" />
-        <input type="text" className="search-box" placeholder="검색" />
-        <div className="nav-items">
-          <img src="img/home.PNG" className="icon" alt="" />
-          <img src="img/messenger.PNG" className="icon" alt="" />
-          <img src="img/add.PNG" className="icon" alt="" onClick={() => {setModal(!modal)}}/>
-          <img src="img/explore.PNG" className="icon" alt="" />
-          <img src="img/like.PNG" className="icon" alt="" />
-          
-          <ProfileImg onClick={()=>{navigate('/profile')}} src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
-        
-          <div className="icon user-profile"></div>
-        </div>
-        <button onClick={logOut}>로그아웃</button>
-      </div>
+    <>
+      <HeaderWrap>
+        <NavWrapper>
+          <Logo onClick={() => navigate("/")} src="img/logo.PNG" alt="" />
+          <SearchBox type="text" placeholder="검색" />
+          <RightBar>
+            <IconWrap>
+              <Icon src="img/home.PNG" alt="" />
+              <Icon src="img/messenger.PNG" alt="" />
+              <Icon
+                src="img/add.PNG"
+                alt=""
+                onClick={() => {
+                  setModal(!modal);
+                }}
+              />
+              <Icon src="img/explore.PNG" alt="" />
+              <Icon src="img/like.PNG" alt="" />
+            </IconWrap>
 
-      {/* Displaying double-Modal for file-upload and posting */}
-      {modal? <ImgModal modal={modal} setModal={setModal} modal2={modal2} setModal2={setModal2} setSelectedPic={setSelectedPic}/> : ''}
-      {modal2? <PostModal modal2={modal2} setModal2={setModal2} selectedPic={selectedPic}/> : ''}
+            <div>
+              <ProfileImg onClick={clickToggle} src={myProfileImg} alt="" />
+            </div>
+          </RightBar>
+        {toggle ? (
+          <ToggleList>
+            <li
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              프로필
+            </li>
+            <li style={{borderTop:'1px solid gray'}} onClick={logOut}>로그아웃</li>
+          </ToggleList>
+        ) : null}
+        </NavWrapper>
 
-    </HeaderWrap>
-
-
+        {/* Displaying double-Modal for file-upload and posting */}
+        {modal ? <ImgModal modal={modal} setModal={setModal} modal2={modal2} setModal2={setModal2} setSelectedPic={setSelectedPic} /> : ""}
+        {modal2 ? <PostModal modal2={modal2} setModal2={setModal2} selectedPic={selectedPic} /> : ""}
+      </HeaderWrap>
+    </>
   );
 };
 
@@ -65,60 +87,51 @@ const HeaderWrap = styled.div`
   display: flex;
   justify-content: center;
   padding: 5px 0;
-
-  .nav-wrapper{
-    width: 70%;
-    max-width: 1000px;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.brand-img{
-    height: 100%;
-    margin-top: 5px;
-}
-
-.search-box{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 25px;
-    background: #fafafa;
-    border: 1px solid #dfdfdf;
-    border-radius: 2px;
-    color: rgba(0, 0, 0, 0.5);
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.search-box::placeholder{
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.nav-items{
-    height: 24px;
-    position: relative;
-}
-
-.icon{
-    height: 100%;
-    cursor: pointer;
-    margin: 0 10px;
-    display: inline-block;
-}
-
-.user-profile{
-    width: 22px;
-    border-radius: 50%;
-    /* background-image: url(img/profile-pic.png); */
-    background-size: cover;
-}
-
 `;
 
+const Logo = styled.img`
+  height: 100%;
+  margin-top: 5px;
+  cursor: pointer;
+`;
+
+const NavWrapper = styled.div`
+  width: 70%;
+  max-width: 1000px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+`;
+
+const SearchBox = styled.input`
+  width: 200px;
+  height: 25px;
+  background: #fafafa;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+`;
+
+const RightBar = styled.div`
+  display: flex;
+`;
+
+const IconWrap = styled.div`
+  height: 24px;
+`;
+
+const Icon = styled.img`
+  cursor: pointer;
+  margin: 0 10px;
+  height: 100%;
+`;
 
 const ProfileImg = styled.img`
   margin-left: 15px;
@@ -126,4 +139,19 @@ const ProfileImg = styled.img`
   border-radius: 50%;
   width: 24px;
   height: 24px;
+`;
+
+const ToggleList = styled.ul`
+  list-style-type: none;
+  position: absolute;
+  right: 0px;
+  top: 70px;
+  width: 230px;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+
+  li {
+    cursor: pointer;
+    margin: 16px 8px;
+  }
 `;

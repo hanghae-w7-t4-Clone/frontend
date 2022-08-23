@@ -8,19 +8,18 @@ import { __sendPostsThuck } from "../redux/modules/postSlice";
 import CloseButton from "react-bootstrap/CloseButton";
 
 const PostModal = ({ modal2, setModal2, selectedPic }) => {
-  
   // Dispatch
   const dispatch = useDispatch();
 
   const [post, setPost] = useState({
     content: "",
-    place: ""
+    place: "",
   });
 
   const postInfo = useSelector((state) => state.posts);
 
   console.log("Checking postInfo " + JSON.stringify(postInfo.postImgUrl[0]));
-  console.log(typeof postInfo.postImgUrl[0])
+  console.log(typeof postInfo.postImgUrl[0]);
 
   const onSignUpHandler = (event) => {
     // console.log(event.target.value);
@@ -37,46 +36,42 @@ const PostModal = ({ modal2, setModal2, selectedPic }) => {
       __sendPostsThuck({
         imgUrlList: [postInfo.postImgUrl[0]],
         content: post.content,
-        place: post.place
+        place: post.place,
       })
-    )
+    );
   };
 
-  return (
-    <ModalCon>
-      <ModalBox>
-        <Img src={selectedPic} alt="hello this is img" />
-        <h1>Hello this is modal2</h1>
-        <form onSubmit={submitPostInfo}>
-          <h3>Modal</h3>
-          <input
-            placeholder="content"
-            name="content"
-            onChange={onSignUpHandler}
-          />
-          <input placeholder="place" name="place" onChange={onSignUpHandler} />
-          <button type="submit">Post</button>
-        </form>
-      </ModalBox>
 
-      {/* modal => true */}
-      <CloseButton
-        onClick={() => {
-          setModal2(!modal2);
-        }}
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "50px",
-          height: "50px",
-          padding: 0,
-        }}
-      />
-    </ModalCon>
-  );
-};
+    return (
+      <ModalCon>
+        <ModalBox>
+          <Img src={selectedPic} alt="hello this is img" />
+          <h1>Hello this is modal2</h1>
+          <form onSubmit={submitPostInfo}>
+            <h3>Modal</h3>
+            <input placeholder="content" name="content" onChange={onSignUpHandler} />
+            <input placeholder="place" name="place" onChange={onSignUpHandler} />
+            <button type="submit">Post</button>
+          </form>
+        </ModalBox>
 
+        {/* modal => true */}
+        <CloseButton
+          onClick={() => {
+            setModal2(!modal2);
+          }}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "50px",
+            height: "50px",
+            padding: 0,
+          }}
+        />
+      </ModalCon>
+    );
+  }
 export default PostModal;
 
 const ModalCon = styled.div`

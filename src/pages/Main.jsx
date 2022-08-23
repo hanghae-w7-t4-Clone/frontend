@@ -36,10 +36,6 @@ const Main = () => {
     );
   };
 
-  const interverImg = () => {
-    setInterval();
-  };
-
   return (
     <div>
       <div style={{display: 'flex'}}>
@@ -78,7 +74,7 @@ const Main = () => {
           <Box className="box">
             <p>
               계정이 없으신가요?{" "}
-              <SignUp href="#">
+              <SignUp href="" onClick={()=>{navigate('/signup')}}>
                 가입하기
               </SignUp>
             </p>

@@ -46,13 +46,13 @@ export const loginMember = (data) => {
           return (
             console.log(response),
             sessionStorage.setItem("token", response.headers.authorization),
-
-            sessionStorage.setItem("nickname", response.data.data),
+            sessionStorage.setItem("profileImg", response.data.data.profilePhoto),
+            sessionStorage.setItem("nickname", response.data.data.nickname),
             // cookies.save("refresh-token", response.headers["refresh-token"])
             cookies.save("refresh-token", response.headers["refresh-token"]),
+            alert(`${sessionStorage.nickname}님 환영합니다.`),
             window.location.replace("/posts")
-            // sessionStorage.setItem("nickname", response.data.data.nickname),
-            // alert(`${sessionStorage.nickname}님 환영합니다.`),
+
             );
           } else {
             return (window.alert(response.data.error.message),
