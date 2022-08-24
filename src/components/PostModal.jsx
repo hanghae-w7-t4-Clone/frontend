@@ -10,7 +10,7 @@ import CloseButton from "react-bootstrap/CloseButton";
 const PostModal = ({modal2, setModal2, selectedPic }) => {
   
   const userNickname = sessionStorage.getItem("nickname")
-  const userImgUrl = sessionStorage.getItem("imgUrl")
+  const userImgUrl = sessionStorage.getItem("profileImg")
 
   // Dispatch
   const dispatch = useDispatch();
