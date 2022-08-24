@@ -7,20 +7,20 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import {postCmtThunk } from "../redux/modules/commentSlice";
+import {postCmtThunk, getCmtThunk} from "../redux/modules/commentSlice";
+
 
 const DeetsModal = (props) => {
 
+    const dispatch = useDispatch();
     // Hook 
     const [comment, setComment] = useState("")
 
+    // console.log("Check here ", props)
+
     // Retrieving user profile
     const userProf = useSelector((state) => state.profile);
-  
-    // Redux
-	const dispatch = useDispatch()
 
-    // console.log("Hello userProf Check " + JSON.stringify(userProf.profPics))
     
     console.log("Checking props ", props)
     
@@ -53,10 +53,10 @@ const DeetsModal = (props) => {
                         <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
                         <ModalTitle>{userProf.profInfo.nickname}</ModalTitle>
                     </ModalHeader>
-                    <ModalBody>   
-                    <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
-                    <div>코멘트입니다</div>        
-                    <button>삭제</button>
+                    <ModalBody>         
+                        <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
+                        <div>코멘트입니다</div>        
+                        <button>삭제</button>  
                     </ModalBody>
                     <ModalFooter>
                     <form onSubmit={onSubmitHandler}>

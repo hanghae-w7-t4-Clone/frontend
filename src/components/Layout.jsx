@@ -10,16 +10,16 @@ import { __getDetailThuck, __getPostsThuck, __getRecommendThuck } from "../redux
 import DetailModal from "./DetailModal.jsx";
 import UpdateModal from "./UpdateModal.jsx";
 import EditModal from "./EditModal.jsx";
+import { postCmtThunk } from "../redux/modules/commentSlice";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
   const detail = useSelector((state) => state.posts.detail);
   const recommend = useSelector((state) => state.posts.newUsers);
 
-  console.log("Checking post ",posts);
+  // console.log(posts);
   // console.log(detail);
   // console.log(recommend);
-  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,8 +29,9 @@ const Layout = () => {
   const [editModal, setEditModal] = useState(false);
   const [selectedContent, setSelectedContent] = useState({
     content: "",
-    id : ""
-  })
+    id: "",
+    imgUrl: "",
+  });
 
   // const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
   const myProfileImg = sessionStorage.getItem("profileImg");
@@ -43,7 +44,7 @@ const Layout = () => {
   useEffect(() => {
     dispatch(__getPostsThuck());
     dispatch(__getRecommendThuck());
-    console.log("hello checking")
+    console.log("this is useEffect");
   }, [dispatch]);
 
   const getDetail = async (id) => {
@@ -51,90 +52,109 @@ const Layout = () => {
     setDetailModal(!detailModal);
   };
 
+  const onSubmitHandler = (e, id) => {
+    console.log("checking e ", e);
+    console.log(e.target[0].value);
+    console.log("checking id ", id);
+    if (e.target[0].value !== "") {
+      e.preventDefault();
+      dispatch(postCmtThunk({ cardId: id, content: e.target[0].value }));
+      window.location.replace("/posts");
+    } else {
+      e.preventDefault();
+      alert("댓글을 입력하세요!");
+    }
+  };
 
-  const selectedHandler = (el) =>{
-    console.log("Checking post content", el)
-    setEditModal(!editModal)
+  const selectedHandler = (el) => {
+    // console.log("Checking post content", el)
+    // console.log("Checking post imgUrlList ", el.imgUrlList[0])
+    setEditModal(!editModal);
     setSelectedContent({
       content: el.content,
-      id: el.id
-    })
-  }
-
-  
+      id: el.id,
+      imgUrl: el.imgUrlList[0],
+    });
+  };
 
   return (
     <LayoutWrap>
-      {console.log("This is return ", posts)}
+      {/* {console.log("This is return ", posts)} */}
       <CardsWrap>
-        {posts.map((el) => {
-          return (
-            <>
-            <Card key={el.id}>
-              <TopWrap>
-                <ProfileImgNickname>
-                  <ProfileImg src={el.profilePhoto} alt="" />
-                  <Nickname>{el.nickname}</Nickname>
-                </ProfileImgNickname>
-                <IconBox>
-                  <TbDots onClick={()=>{selectedHandler(el)}}/>
-                </IconBox>
-              </TopWrap>
+        {posts.length !== 0 && console.log("hello")}
+        {posts.length !== 0 &&
+          posts.map((el) => {
+            return (
+              <>
+                <Card key={el.id}>
+                  <TopWrap>
+                    <ProfileImgNickname>
+                      <ProfileImg src={el.profilePhoto} alt="" />
+                      <Nickname>{el.nickname}</Nickname>
+                    </ProfileImgNickname>
+                    <IconBox>
+                      <TbDots
+                        onClick={() => {
+                          selectedHandler(el);
+                        }}
+                      />
+                    </IconBox>
+                  </TopWrap>
 
-              <ImgWrap>
-                <ContentImg src={el.imgUrlList[0]} alt="" />
-              </ImgWrap>
-              <IconWrap>
-                <div onClick={likeHander}>{isLike === true ? <BsHeartFill size="24" color="#ff0000" /> : <BsHeart size="24" />}</div>
-                <BsChat size="24" />
-                <FiSend size="24" />
-              </IconWrap>
-              <div>
-                <LikeNameWrap>
-                  <ProfileImgSmall src={myProfileImg} alt="" />
+                  <ImgWrap>
+                    <ContentImg src={el.imgUrlList[0]} alt="" />
+                  </ImgWrap>
+                  <IconWrap>
+                    <div onClick={likeHander}>{isLike === true ? <BsHeartFill size="24" color="#ff0000" /> : <BsHeart size="24" />}</div>
+                    <BsChat size="24" />
+                    <FiSend size="24" />
+                  </IconWrap>
+                  <div>
+                    <LikeNameWrap>
+                      <ProfileImgSmall src={myProfileImg} alt="" />
 
-                  {el.likeCount !== 0 ? (
-                    <span>
-                      <b>{el.nickname}</b>님 외 {el.likeCount} 명이 좋아합니다.
-                    </span>
-                  ) : (
-                    `제일 먼저 좋아요를 눌러보세요`
-                  )}
-                </LikeNameWrap>
-                <NickConstentWrap>
-                  <span>
-                    <b>{el.nickname}</b>
-                  </span>
-                  <p style={{ width: "85%", margin: "0" }}>{el.content}</p>
-                </NickConstentWrap>
-                <RipleCnt
-                  onClick={()=>getDetail(el.id)}
-                >
-                  {el.commentCount === 0 ? "댓글을 남겨보세요" : `댓글 ${el.commentCount}개 모두보기`}
-                </RipleCnt>
-                <RiplePost>
-                  <span>
-                    <b>{el.nickname}</b>
-                  </span>
-                  <span>{el.content}</span>
-                </RiplePost>
-                <PostDate>{el.createdAt.split("T").at(0) + " " + el.createdAt.split("T").at(1).split(".").at(0)}</PostDate>
-                <RipleInputForm>
-                  <FaRegSmile size="24" />
-                  <input type="text" />
-                  <button>게시</button>
-                </RipleInputForm>
-              </div>
-            </Card>
-             </>
-          );
-        })}
-      {/* {console.log("this is render ", selectedContent)} */}
-      <EditModal editModal={editModal} setEditModal={setEditModal} content={selectedContent} ></EditModal>
-      <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}/>
-      
+                      {el.likeCount !== 0 ? (
+                        <span>
+                          <b>{el.nickname}</b>님 외 {el.likeCount} 명이 좋아합니다.
+                        </span>
+                      ) : (
+                        `제일 먼저 좋아요를 눌러보세요`
+                      )}
+                    </LikeNameWrap>
+                    <NickConstentWrap>
+                      <span>
+                        <b>{el.nickname}</b>
+                      </span>
+                      <p style={{ width: "85%", margin: "0" }}>{el.content}</p>
+                    </NickConstentWrap>
+                    <RipleCnt onClick={() => getDetail(el.id)}>{el.commentCount === 0 ? "댓글을 남겨보세요" : `댓글 ${el.commentCount}개 모두보기`}</RipleCnt>
+                    <RiplePost>
+                      {el.commentResponseDto.length === 0 ? (
+                        ""
+                      ) : (
+                        <>
+                          <span>
+                            <b>{el.commentResponseDto[0].nickname}</b>
+                          </span>
+                          <span>{el.commentResponseDto[0].content}</span>
+                        </>
+                      )}
+                    </RiplePost>
+                    <PostDate>{el.createdAt.split("T").at(0) + " " + el.createdAt.split("T").at(1).split(".").at(0)}</PostDate>
+                    <RipleInputForm onSubmit={(e) => onSubmitHandler(e, el.id)}>
+                      <FaRegSmile size="24" />
+                      <input type="text" />
+                      <button type="submit">게시</button>
+                    </RipleInputForm>
+                  </div>
+                </Card>
+              </>
+            );
+          })}
+        {/* {console.log("this is render ", selectedContent)} */}
+        <EditModal editModal={editModal} setEditModal={setEditModal} content={selectedContent}></EditModal>
+        <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)} />
       </CardsWrap>
-      
 
       <RightBarWrap>
         <RightBarTop>
@@ -280,6 +300,7 @@ const NickConstentWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 12px 0 12px;
+  gap: 10px;
 `;
 
 const RipleCnt = styled.div`
@@ -361,24 +382,3 @@ const RightBarBottom = styled.div`
   margin: 30px 0px 15px 12px;
 `;
 
-const LoginErrWrap = styled.div`
-  height: 100vh;
-  margin: 90px auto 50px;
-  width: 100%;
-  max-width: 1920px;
-  display: flex;
-  justify-content: center;
-`;
-
-const LoginErr = styled.div`
-  width: 300px;
-  height: 350px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  background-color: #fff;
-  margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;

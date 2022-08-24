@@ -2,17 +2,25 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import { TbDots } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
+import { __getUpdateThuck, __getDeleteThuck} from '../redux/modules/postSlice'
+import { useDispatch} from "react-redux"; 
 
 const EditModal = ({ editModal, setEditModal, content }) => {
- 
-  const aaa = content.content
+
+  // Dispatch
+  const dispatch = useDispatch();
   
   const [uModal, setUModal] = useState(false);
 
   // const [text, setText] = useState(initialstate);
-  const [modalContent, setModalContent] = useState(aaa);
+  const [modalEdit, setModalEdit] = useState({
+    id: "",
+    content: "",
+    imgUrl: ""
+  });
   
-  // console.log(content);
+  // console.log("Checking content ", content);
   // console.log("Checking props content :", content.content);
   // console.log("Checking text :", modalContent);
   // console.log(content.id);
@@ -20,10 +28,27 @@ const EditModal = ({ editModal, setEditModal, content }) => {
   const myProfileImg = sessionStorage.getItem("profileImg");
   const myNickname = sessionStorage.getItem("nickname");
 
+  const editModeHandler = () => {
+    setModalEdit({id: content.id, content: content.content, imgUrl: content.imgUrl})
+    setUModal(!uModal)
+  }
+
   const onChangeHandler = (e) => {
-    setModalContent(e.target.value);
-    // console.log("hello")
+    setModalEdit({...modalEdit, content: e.target.value});
   };
+
+  const onSubmithandler = (obj) =>{
+    dispatch(__getUpdateThuck(obj))
+    window.location.replace("/posts");
+    setEditModal(!editModal);
+  } 
+
+  const onDelhandler = (id) => {
+    setModalEdit({...modalEdit, id: content.id})
+    dispatch(__getDeleteThuck(id))
+    window.location.replace("/posts");
+    setEditModal(!editModal);
+  }
 
   if (!editModal) {
     return "";
@@ -32,21 +57,21 @@ const EditModal = ({ editModal, setEditModal, content }) => {
   return (
     <ModalCon>
       {!uModal ? (
-        <ModalBox>
-          <MenuBtn onClick={() => setUModal(!uModal)}>수정</MenuBtn>
-          <MenuBtn style={{ color: "red" }}>삭제</MenuBtn>
-        </ModalBox>
+       <ModalBox>
+          <MenuBtn onClick={() => editModeHandler()}>수정</MenuBtn>
+          <MenuBtn style={{ color: "red" }} onClick={()=>{onDelhandler(modalEdit.id)}}>삭제</MenuBtn>
+        </ModalBox> 
       ) : (
         <ModalFormBox>
           <ModalTop>
-            <div>취소</div>
+            <div onClick={()=> setEditModal(!editModal)}>취소</div>
             <div>정보 수정</div>
-            <Bluebtn type="submit">완료</Bluebtn>
+            <Bluebtn type="submit" onClick={()=>{onSubmithandler({id: modalEdit.id, content: modalEdit.content})}}>완료</Bluebtn>
           </ModalTop>
 
           <ModalBottom>
             <ModalLeft>
-              <ModalImg alt="modalPic" />
+              <ModalImg src={content.imgUrl}alt="modalPic" />
             </ModalLeft>
 
             <ModalRight>
@@ -60,8 +85,8 @@ const EditModal = ({ editModal, setEditModal, content }) => {
 
                 <ModalBody>
                   <div>
-                    {console.log("checking text text", modalContent)}
-                    <TextArea defaultValue={modalContent}  type="text" onChange={onChangeHandler}/>
+                    {/* {console.log("checking text", modalContent)} */}
+                    <TextArea defaultValue={modalEdit.content} type="text" onChange={onChangeHandler}/>
                   </div>
                 </ModalBody>
               </div>
@@ -200,5 +225,5 @@ const ModalLeft = styled.div`
 const ModalImg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;

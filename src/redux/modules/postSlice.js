@@ -4,7 +4,6 @@ import instance from "../../shered/request";
 /** 게시글 전체조희 */
 export const __getPostsThuck = createAsyncThunk(
   "GET_POST", async (payload, thunkAPI) => {
-  console.log("Checking getPostThunk")
   try {
     const resp = await instance.get(`cards`);
     return (
@@ -67,10 +66,11 @@ export const __sendPostsThuck = createAsyncThunk(
 /** 게시물 수정 */
 export const __getUpdateThuck = createAsyncThunk("UPDATE_POST", async (payload, thunkAPI) => {
   try {
-    const resp = await instance.patch(`auth/cards/${payload}`);
-    
+
+    console.log("Check payload : ", payload)
+    const resp = await instance.patch(`auth/cards/${payload.id}`,{content : payload.content});
     return (
-      console.log(resp.data.data),
+      console.log(resp),
       thunkAPI.fulfillWithValue(resp.data.data)
     );
   } catch (err) {
@@ -82,11 +82,12 @@ export const __getUpdateThuck = createAsyncThunk("UPDATE_POST", async (payload, 
 /** 게시물 삭제 */
 export const __getDeleteThuck = createAsyncThunk("DELETE_POST", async (payload, thunkAPI) => {
   try {
+    console.log("Check delete ", payload)
     const resp = await instance.delete(`auth/cards/${payload}`);
     
     return (
-      console.log(resp.data.data),
-      thunkAPI.fulfillWithValue(resp.data.data)
+      console.log(resp)
+      // thunkAPI.fulfillWithValue(resp.data.data)
     );
   } catch (err) {
     return thunkAPI.rejectWithValue(err.code);
@@ -112,7 +113,8 @@ const initialState = {
   posts: [],
   detail: {},
   newUsers: [],
-  postImgUrl: ""
+  postImgUrl: "",
+  editedPost: []
 };
 
 const postSlice = createSlice({
@@ -132,7 +134,7 @@ const postSlice = createSlice({
 
     /** 사진 등록 */
     [__imgPostsThuck.fulfilled]: (state, action) => {
-
+      console.log(state)
       console.log("Img post check", action.payload)
       state.postImgUrl = action.payload;
     },
@@ -159,8 +161,8 @@ const postSlice = createSlice({
 
     /** 게시물 수정 */
     [__getUpdateThuck.fulfilled]: (state, action) => {
-
-      state.posts = action.payload;
+      console.log("This is fulfiled ", action.payload)
+      state.editedPost = action.payload;
     },
     [__getUpdateThuck.rejected]: (state, action) => {
       state.error = action.payload;
@@ -168,7 +170,7 @@ const postSlice = createSlice({
     
     /** 게시물 삭제 */
     [__getDeleteThuck.fulfilled]: (state, action) => {
-      state.posts = action.payload;
+      // state.posts = action.payload;
     },
     [__getDeleteThuck.rejected]: (state, action) => {
       state.error = action.payload;

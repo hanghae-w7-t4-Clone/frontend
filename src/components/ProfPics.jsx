@@ -39,6 +39,7 @@ const ProfPics = () => {
   	// console.log("Checking useSelector in ProfPics " + JSON.stringify(userProf))
     // console.log(userProf.map((e) => e))
 	const imgClick = (imgSrc) => {
+		console.log("Checking ", imgSrc)
 		// console.log("Checking imgSrc " + JSON.stringify(imgSrc))
 		setSelectedProfPics({selectedCardId: imgSrc.id, selectedImgSrc: imgSrc.imgUrlList[0]});
 		dispatch(getCmtThunk(imgSrc.id))
@@ -70,7 +71,7 @@ const ProfPics = () => {
 			<DeetsModal
 			show={showModal}
 			img={selectedProfPics.selectedImgSrc}
-			id={selectedProfPics.selectedCardId}
+			cardId={selectedProfPics.selectedCardId}
 			onClose={() => setShowModal(false)}
       		>
       		</DeetsModal>
