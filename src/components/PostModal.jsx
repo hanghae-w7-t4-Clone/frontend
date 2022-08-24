@@ -62,7 +62,6 @@ const PostModal = ({modal2, setModal2, selectedPic }) => {
           </ModalHeader>
           <ModalBody>
           <ModalInContent
-            size="30"
             placeholder="content"
             name="content"
             onChange={onSignUpHandler}
@@ -121,7 +120,9 @@ const ModalBody = styled.div`
 `
 
 const ModalInContent = styled.textarea`
-  
+  width: 100%;
+  height: 70%;
+  resize: none;
 `
 
 const ModalContent = styled.div`
