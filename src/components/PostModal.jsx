@@ -17,7 +17,7 @@ const PostModal = ({modal2, setModal2, selectedPic }) => {
 
   const [post, setPost] = useState({
     content: "",
-    place: ""
+    place: "",
   });
 
   const postInfo = useSelector((state) => state.posts);
@@ -40,7 +40,7 @@ const PostModal = ({modal2, setModal2, selectedPic }) => {
       __sendPostsThuck({
         imgUrlList: [postInfo.postImgUrl[0]],
         content: post.content,
-        place: post.place
+        place: post.place,
       })
     )
     setModal2(!modal2);

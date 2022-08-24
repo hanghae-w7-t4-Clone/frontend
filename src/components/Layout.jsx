@@ -8,23 +8,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { __getDetailThuck, __getPostsThuck, __getRecommendThuck } from "../redux/modules/postSlice.js";
 import DetailModal from "./DetailModal.jsx";
+import UpdateModal from "./UpdateModal.jsx";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
-
   const detail = useSelector((state) => state.posts.detail);
   const recommend = useSelector((state) => state.posts.newUsers);
 
-  // console.log(posts, detail);
-  console.log(recommend);
+  console.log(posts);
+  // console.log(detail);
+  // console.log(recommend);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isLike, setIslike] = useState(false);
   const [detailModal, setDetailModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
-  const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
+  // const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
+  const myProfileImg = sessionStorage.getItem("profileImg");
+  const myNickname = sessionStorage.getItem("nickname");
 
   const likeHander = () => {
     setIslike(!isLike);
@@ -35,9 +39,12 @@ const Layout = () => {
     dispatch(__getRecommendThuck());
   }, [dispatch]);
 
-  const getDetail = (id) => {
-    dispatch(__getDetailThuck(id));
+  const getDetail = async (id) => {
+    await dispatch(__getDetailThuck(id));
+    setDetailModal(!detailModal);
   };
+
+  
 
   return (
     <LayoutWrap>
@@ -51,7 +58,7 @@ const Layout = () => {
                   <Nickname>{el.nickname}</Nickname>
                 </ProfileImgNickname>
                 <IconBox>
-                  <TbDots />
+                  <TbDots/>
                 </IconBox>
               </TopWrap>
 
@@ -65,7 +72,7 @@ const Layout = () => {
               </IconWrap>
               <div>
                 <LikeNameWrap>
-                  <ProfileImgSmall src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
+                  <ProfileImgSmall src={myProfileImg} alt="" />
 
                   {el.likeCount !== 0 ? (
                     <span>
@@ -82,12 +89,8 @@ const Layout = () => {
                   <p style={{ width: "85%", margin: "0" }}>{el.content}</p>
                 </NickConstentWrap>
                 <RipleCnt
-                  onClick={() => {
-                    getDetail(el.id);
-                    setDetailModal(!detailModal);
-                  }}
+                  onClick={()=>getDetail(el.id)}
                 >
-                  {" "}
                   {el.commentCount === 0 ? "댓글을 남겨보세요" : `댓글 ${el.commentCount}개 모두보기`}
                 </RipleCnt>
                 <RiplePost>
@@ -106,16 +109,17 @@ const Layout = () => {
             </Card>
           );
         })}
-
-        <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}></DetailModal>
+      <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}/>
+      <UpdateModal onClose={() => setUpdateModal(false)}  ></UpdateModal>
       </CardsWrap>
+      
 
       <RightBarWrap>
         <RightBarTop>
           <RiplePost>
-            <ProfileImgBig src="https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg" alt="" />
+            <ProfileImgBig src={myProfileImg} alt="" />
             <span>
-              <b>닉네임</b>
+              <b>{myNickname}</b>
             </span>
           </RiplePost>
           <BlueBtn>전환</BlueBtn>
@@ -130,7 +134,7 @@ const Layout = () => {
         <div>
           {recommend.map((el) => {
             return (
-              <Recommended>
+              <Recommended key={el.id}>
                 <RiplePost>
                   <ProfileImg src={el.profilePhoto} alt="" />
                   <span>
@@ -142,7 +146,6 @@ const Layout = () => {
             );
           })}
         </div>
-        
 
         <RightBarBottom>
           <div>소개. 도움말. 홍보 센터. API. 채용정보.</div>
@@ -153,7 +156,6 @@ const Layout = () => {
     </LayoutWrap>
   );
 };
-
 export default Layout;
 
 const LayoutWrap = styled.div`
@@ -308,6 +310,7 @@ const BlueBtn = styled.div`
   background-color: #fafafa;
   font-weight: bold;
   color: #3baef8;
+  cursor: pointer;
 `;
 
 const RightBarWrap = styled.div`
@@ -334,4 +337,26 @@ const RightBarBottom = styled.div`
   color: gray;
   font-size: 13px;
   margin: 30px 0px 15px 12px;
+`;
+
+const LoginErrWrap = styled.div`
+  height: 100vh;
+  margin: 90px auto 50px;
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  justify-content: center;
+`;
+
+const LoginErr = styled.div`
+  width: 300px;
+  height: 350px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
