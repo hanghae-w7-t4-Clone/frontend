@@ -15,8 +15,8 @@ const Layout = () => {
   const detail = useSelector((state) => state.posts.detail);
   const recommend = useSelector((state) => state.posts.newUsers);
 
-  // console.log(posts);
-  console.log(detail);
+  console.log(posts);
+  // console.log(detail);
   // console.log(recommend);
 
   const dispatch = useDispatch();
