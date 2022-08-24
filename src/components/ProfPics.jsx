@@ -17,6 +17,7 @@ const ProfPics = () => {
 	// Hook for modal
 	const [showModal, setShowModal] = useState(false);
 	
+	// Hook for selected post by user
 	const [selectedProfPics, setSelectedProfPics] = useState({
 		selectedImgSrc: '',
 		selectedCardId: '',
@@ -25,7 +26,10 @@ const ProfPics = () => {
 	// Getting nickname from sessionStorage
 	const userNickname = sessionStorage.getItem("nickname")
 
+	// Redux
 	const dispatch = useDispatch()
+
+
 	useEffect(() => {
 	  dispatch(getProfPicsThunk(userNickname));
 	}, []);
@@ -47,6 +51,7 @@ const ProfPics = () => {
 	<MainCon>
 
 		<GallCon>
+			{console.log("Checking")}
             { userProf.map((e) => {
                 // console.log("Checking return "+ JSON.stringify(e))
                 // console.log(e.imgUrlList[0])
@@ -65,6 +70,7 @@ const ProfPics = () => {
 			<DeetsModal
 			show={showModal}
 			img={selectedProfPics.selectedImgSrc}
+			id={selectedProfPics.selectedCardId}
 			onClose={() => setShowModal(false)}
       		>
       		</DeetsModal>

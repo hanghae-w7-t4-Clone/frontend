@@ -20,8 +20,10 @@ export const postCmtThunk = createAsyncThunk(
   "POST_CMT",
   async (payload, thunkAPI) => {
     try {
-      console.log("Checking payload " + payload)
-      const { data } = await instance.post(`/auth/cards/${payload}/comments`);
+      console.log("Checking payload ", payload)
+      console.log("Checking payload ID ", payload.cardId)
+      console.log("Checking payload content ", payload.content)
+      const { data } = await instance.post(`/auth/cards/${payload.cardId}/comments`, {"content": payload.content});
       // console.log("Checking getProfileThunk " + JSON.stringify(data.data))
       console.log("Checking Ater GET " + JSON.stringify(data))
       return thunkAPI.fulfillWithValue(data.data);

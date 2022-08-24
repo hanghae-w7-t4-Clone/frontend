@@ -62,12 +62,13 @@ const PostModal = ({modal2, setModal2, selectedPic }) => {
           </ModalHeader>
           <ModalBody>
           <ModalInContent
+            rows="10"
             placeholder="content"
             name="content"
             onChange={onSignUpHandler}
           >
           </ModalInContent>
-          <input placeholder="place" name="place" onChange={onSignUpHandler} />
+          <ModalInPlace placeholder="place" name="place" onChange={onSignUpHandler} />
           </ModalBody>
           <ShareBtn type="submit">공유하기</ShareBtn>
         </PostForm>
@@ -117,13 +118,12 @@ const ModalHeader = styled.div`
 
 const ModalBody = styled.div`
   
-`
+`;
 
 const ModalInContent = styled.textarea`
   width: 100%;
-  height: 70%;
   resize: none;
-`
+`;
 
 const ModalContent = styled.div`
     width: 70%;
@@ -132,14 +132,18 @@ const ModalContent = styled.div`
     display: flex;
 `;
 
+const ModalInPlace = styled.input`
+    width: 100%;
+`;
+
 const ModalLeft = styled.div`
-    flex: 45%;
+    flex: 55%;
     padding: 2% 0 2% 0;
     background-color: black;
 `;
 
 const ModalRight = styled.div`
-    flex: 55%;
+    flex: 45%;
     padding: 1% 1% 1% 2%;
     position: relative;
 `;
@@ -152,6 +156,11 @@ const ShareBtn = styled.button`
   width: 20%;
   height: 9%;
   font-size: 1rem;
+  border: none;
+  background: none;
+  color: #4d95f5;
+  font-weight: bold;
+  
 `
 
 // const ModalBox = styled.div`
@@ -178,8 +187,8 @@ const Img = styled.img`
 const PostImg = styled.img`
   border: 1px solid #dfdfdf;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 8%;
+  height: 70%;
 `
 
 

@@ -15,7 +15,6 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic }) => {
   // Hook to save file
   const [upload, setUpload] = useState(false)
   const [attachment, setAttachment] = useState("");
-  const [sendImg, setSendImg] = useState("")
 
   // Initializing FormData to upload a file
   // let frm = new FormData();
@@ -89,7 +88,6 @@ const ImgModal = ({ modal, modal2, setModal, setModal2, setSelectedPic }) => {
          <NextBtn type="submit">작성하기</NextBtn>
        </ImgForm> */}
        {/* } */}
-        
       </ModalBox>
 
       {/* modal => true */}
@@ -176,6 +174,11 @@ const UploadCon = styled.div`
 const ImgBtn = styled.button`
   width: 135px;
   height: 30px;
+  border: none;
+  border: none;
+  background: none;
+  color: #4d95f5;
+  font-weight: bold;
   /* top: 50%;
   left: 40%;;
   position: absolute; */
@@ -188,4 +191,8 @@ const NextBtn = styled.button`
   width: 15%;
   height: 9%;
   font-size: 1rem;
+  border: none;
+  background: none;
+  color: #4d95f5;
+  font-weight: bold;
 `;
