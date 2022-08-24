@@ -13,8 +13,6 @@ const Header = () => {
 
   const [modal2, setModal2] = useState(false)
   const [selectedPic, setSelectedPic] = useState(false)
-  const [getImgUrl, setGetImgUrl] = useState("")
-
 
   const logOut = () => {
     sessionStorage.clear();

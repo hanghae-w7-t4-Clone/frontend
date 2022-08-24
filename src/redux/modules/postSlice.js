@@ -20,10 +20,10 @@ export const __getPostsThuck = createAsyncThunk(
 export const __imgPostsThuck = createAsyncThunk(
   "IMG_POST", async (payload, thunkAPI) => {
   try {
-    console.log("Checking here")
+    console.log("Checking payload", payload)
     const resp = await instance.post('/auth/photos', payload, { "Content-Type": "multipart/form-data"});
     return (
-      // console.log(resp)
+      console.log("Checking",resp),
       // thunkAPI.fulfillWithValue(resp.data.data)
       thunkAPI.fulfillWithValue(resp.data.data)
       )
@@ -131,6 +131,8 @@ const postSlice = createSlice({
 
     /** 사진 등록 */
     [__imgPostsThuck.fulfilled]: (state, action) => {
+
+      console.log("Img post check", action.payload)
       state.postImgUrl = action.payload;
     },
     [__imgPostsThuck.rejected]: (state, action) => {
