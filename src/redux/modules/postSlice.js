@@ -4,7 +4,7 @@ import instance from "../../shered/request";
 /** 게시글 전체조희 */
 export const __getPostsThuck = createAsyncThunk(
   "GET_POST", async (payload, thunkAPI) => {
-
+  console.log("Checking getPostThunk")
   try {
     const resp = await instance.get(`cards`);
     return (
@@ -55,10 +55,9 @@ export const __sendPostsThuck = createAsyncThunk(
     console.log("Hello " + JSON.stringify(payload))
     const resp = await instance.post('auth/cards', payload, { "Content-Type": "application/json"});
     return (
-      console.log(resp)
       // console.log(resp)
-      // thunkAPI.fulfillWithValue(resp.data.data)
-      // thunkAPI.fulfillWithValue(resp.data.data)
+      // console.log(resp)
+      thunkAPI.fulfillWithValue(resp.data.data)
       )
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -138,6 +137,14 @@ const postSlice = createSlice({
       state.postImgUrl = action.payload;
     },
     [__imgPostsThuck.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
+
+    /** 게시글 등록 */
+    [__sendPostsThuck.fulfilled]: (state, action) => {
+      state.posts = action.payload;
+    },
+    [__sendPostsThuck.rejected]: (state, action) => {
       state.error = action.payload;
     },
 

@@ -4,16 +4,26 @@ import CloseButton from "react-bootstrap/esm/CloseButton";
 import { TbDots } from "react-icons/tb";
 
 const EditModal = ({ editModal, setEditModal, content }) => {
+ 
+  const aaa = content.content
+  
   const [uModal, setUModal] = useState(false);
-  const [text, setText] = useState(content);
 
-  console.log(content.content);
-  console.log(content.id);
+  // const [text, setText] = useState(initialstate);
+  const [modalContent, setModalContent] = useState(aaa);
+  
+  // console.log(content);
+  // console.log("Checking props content :", content.content);
+  // console.log("Checking text :", modalContent);
+  // console.log(content.id);
 
   const myProfileImg = sessionStorage.getItem("profileImg");
   const myNickname = sessionStorage.getItem("nickname");
 
-  const onChangehandler = () => {};
+  const onChangeHandler = (e) => {
+    setModalContent(e.target.value);
+    // console.log("hello")
+  };
 
   if (!editModal) {
     return "";
@@ -50,8 +60,8 @@ const EditModal = ({ editModal, setEditModal, content }) => {
 
                 <ModalBody>
                   <div>
-                    <TextArea value={content.content} type="text" placeholder="코멘트를 작성해주세요" />
-                    <button type="submit">Post</button>
+                    {console.log("checking text text", modalContent)}
+                    <TextArea defaultValue={modalContent}  type="text" onChange={onChangeHandler}/>
                   </div>
                 </ModalBody>
               </div>
@@ -105,13 +115,6 @@ const ModalCon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const ModalContent = styled.div`
-  padding-top: 15px;
-  padding-bottom: 20px;
-  display: flex;
-  gap: 10px;
 `;
 
 const ModalBox = styled.div`
