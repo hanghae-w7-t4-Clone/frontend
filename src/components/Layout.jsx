@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { __getDetailThuck, __getPostsThuck, __getRecommendThuck } from "../redux/modules/postSlice.js";
 import DetailModal from "./DetailModal.jsx";
 import UpdateModal from "./UpdateModal.jsx";
+import EditModal from "./EditModal.jsx";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
@@ -18,13 +19,18 @@ const Layout = () => {
   console.log(posts);
   // console.log(detail);
   // console.log(recommend);
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isLike, setIslike] = useState(false);
   const [detailModal, setDetailModal] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [selectedContent, setSelectedContent] = useState({
+    content: "",
+    id : ""
+  })
 
   // const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
   const myProfileImg = sessionStorage.getItem("profileImg");
@@ -44,6 +50,16 @@ const Layout = () => {
     setDetailModal(!detailModal);
   };
 
+
+  const selectedHandler = (el) =>{
+    console.log("Checking post content", el)
+    setEditModal(!editModal)
+    setSelectedContent({
+      content: el.content,
+      id: el.id
+    })
+  }
+
   
 
   return (
@@ -51,6 +67,7 @@ const Layout = () => {
       <CardsWrap>
         {posts.map((el) => {
           return (
+            <>
             <Card key={el.id}>
               <TopWrap>
                 <ProfileImgNickname>
@@ -58,7 +75,7 @@ const Layout = () => {
                   <Nickname>{el.nickname}</Nickname>
                 </ProfileImgNickname>
                 <IconBox>
-                  <TbDots/>
+                  <TbDots onClick={()=>{selectedHandler(el)}}/>
                 </IconBox>
               </TopWrap>
 
@@ -107,10 +124,13 @@ const Layout = () => {
                 </RipleInputForm>
               </div>
             </Card>
+             </>
           );
         })}
+      {console.log("this is render ", selectedContent)}
+      <EditModal editModal={editModal} setEditModal={setEditModal} content={selectedContent} ></EditModal>
       <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}/>
-      <UpdateModal onClose={() => setUpdateModal(false)}  ></UpdateModal>
+      
       </CardsWrap>
       
 

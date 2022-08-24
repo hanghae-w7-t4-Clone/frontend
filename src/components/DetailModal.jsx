@@ -8,11 +8,13 @@ import { __getDetailThuck } from "../redux/modules/postSlice";
 import { TbDots } from "react-icons/tb";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 
-const DeetsModal = (props) => {
+
+const DetailModal = (props) => {
   const defaultProfileImg = "img/basicprofile.png";
   
   const [isLike, setIslike] = useState(false);
   const [comment, setComment] = useState("");
+  const [udModal , setUdModal] = useState(false)
 
   const likeHander = () => {
     setIslike(!isLike);
@@ -33,7 +35,7 @@ const DeetsModal = (props) => {
 
   return (
     <ModalCon>
-      {console.log("Checking " + comment)}
+      
       <ModalBox>
 
         <ModalLeft>
@@ -85,7 +87,7 @@ const DeetsModal = (props) => {
   );
 };
 
-export default DeetsModal;
+export default DetailModal;
 
 const ProfileImg = styled.img`
   border-radius: 50%;
