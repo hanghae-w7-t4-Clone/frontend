@@ -44,10 +44,11 @@ export const loginMember = (data) => {
         console.log(response);
         if (response.data.success === true) {
           return (
-            console.log(response),
+            console.log("Checking login ",response),
             sessionStorage.setItem("token", response.headers.authorization),
-
-            sessionStorage.setItem("nickname", response.data.data),
+            sessionStorage.setItem("nickname", response.data.data.nickname),
+            sessionStorage.setItem("imgUrl", response.data.data.profilePhoto),
+            alert(`${sessionStorage.nickname}님 환영합니다.`),
             // cookies.save("refresh-token", response.headers["refresh-token"])
             cookies.save("refresh-token", response.headers["refresh-token"]),
             window.location.replace("/posts")
