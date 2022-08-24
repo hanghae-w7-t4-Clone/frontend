@@ -8,7 +8,6 @@ import { __getDetailThuck } from "../redux/modules/postSlice";
 import { TbDots } from "react-icons/tb";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
 
-
 const DetailModal = (props) => {
   const defaultProfileImg = "img/basicprofile.png";
   

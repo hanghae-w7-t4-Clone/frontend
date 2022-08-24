@@ -6,18 +6,19 @@ import styled from "styled-components";
 import CloseButton from 'react-bootstrap/CloseButton';
 
 // Redux
-import { useSelector } from 'react-redux';
-import {postCmtThunk} from "../redux/modules/commentSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import {postCmtThunk, getCmtThunk} from "../redux/modules/commentSlice";
 
 const DeetsModal = (props) => {
 
+    const dispatch = useDispatch();
     // Hook 
     const [comment, setComment] = useState("")
 
+    // console.log("Check here ", props)
+
     // Retrieving user profile
     const userProf = useSelector((state) => state.profile);
-  
-    console.log("Hello userProf Check " + JSON.stringify(userProf.profPics))
     
     const onChangeHandler = (e) => {
         setComment(e.target.value)
@@ -25,7 +26,9 @@ const DeetsModal = (props) => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
+        dispatch(postCmtThunk({"cardId":props.id, "content": comment}))
         console.log("Hello checking here !")
+        setComment("")
     };
 
     // If-statement for modal
@@ -34,9 +37,8 @@ const DeetsModal = (props) => {
     }
 
     return (
- 
         <ModalCon>
-                {console.log("Checking " + comment)}
+                {/* {console.log("Checking " + comment)} */}
             <ModalContent>
                 <ModalLeft>
                     <ModalImg src={props.img} alt="modalPic" />
@@ -46,10 +48,13 @@ const DeetsModal = (props) => {
                         <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
                         <ModalTitle>{userProf.profInfo.nickname}</ModalTitle>
                     </ModalHeader>
-                    <ModalBody>           
+                    <ModalBody>         
+                        <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
+                        <div>코멘트입니다</div>        
+                        <button>삭제</button>  
                     </ModalBody>
                     <ModalFooter>
-                    <form onClick={onSubmitHandler}>
+                    <form onSubmit={onSubmitHandler}>
                         <input 
                             type="text"
                             placeholder="코멘트를 작성해주세요"
@@ -76,9 +81,7 @@ const Img = styled.img`
     display: block;
     border-radius: 50%;
     width: 12%;
-    height: 12%;
-    float: left;
-    position: absolute;
+    height: 100%;
 `
 const ModalCon = styled.div`
     position: fixed;
@@ -103,6 +106,7 @@ const ModalHeader = styled.div`
     width: 100%;
     height: 10%;
     display: flex;
+    gap: 3%;
 `;
 
 const ModalFooter = styled.div`
@@ -126,7 +130,8 @@ const ModalTitle = styled.h4`
 `;
 
 const ModalBody = styled.div`
-    padding: 30px;
+    display: flex;
+    margin: 1%;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 `;
