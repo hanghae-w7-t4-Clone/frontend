@@ -5,15 +5,18 @@ import CloseButton from "react-bootstrap/CloseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { postCmtThunk } from "../redux/modules/commentSlice";
 import { __getDetailThuck } from "../redux/modules/postSlice";
+import { TbDots } from "react-icons/tb";
+import { BsHeartFill, BsHeart } from "react-icons/bs";
 
 const DeetsModal = (props) => {
   const defaultProfileImg = "img/basicprofile.png";
   
-
-  console.log(props.detail)
-  // Hook
+  const [isLike, setIslike] = useState(false);
   const [comment, setComment] = useState("");
 
+  const likeHander = () => {
+    setIslike(!isLike);
+  };
   
   const onChangeHandler = (e) => {
     setComment(e.target.value);
@@ -32,13 +35,19 @@ const DeetsModal = (props) => {
     <ModalCon>
       {console.log("Checking " + comment)}
       <ModalBox>
+
         <ModalLeft>
           <ModalImg src={props.detail.imgUrlList[0]} alt="modalPic" />
         </ModalLeft>
+
         <ModalRight>
+          <div>
           <ModalHeader>
-            <ProfileImg src={!props.detail.profilePhoto ? defaultProfileImg : props.detail.profilePhoto} alt="modalUserPic" />
-            <ModalNick>{props.detail.nickname}</ModalNick>
+            <NickProf>
+              <ProfileImg src={!props.detail.profilePhoto ? defaultProfileImg : props.detail.profilePhoto} alt="modalUserPic" />
+              <ModalNick>{props.detail.nickname}</ModalNick>
+            </NickProf>
+            <TbDots/>
           </ModalHeader>
 
           <ModalBody>
@@ -46,19 +55,22 @@ const DeetsModal = (props) => {
               <ProfileImg src={!props.detail.profilePhoto ? defaultProfileImg : props.detail.profilePhoto} alt="modalUserPic" />
               <div>{props.detail.content}</div>
             </ModalContent>
-            <div>{props.detail.createdAt}</div>
-            <div>{props.detail.place}</div>
-            {props.detail.commentResponseDto.map((el)=>{
-              return (
-              <div key={el.id}>
-                <div>{el.nickname}</div>
-                <div>{el.content}</div>
-                <div>{el.likeCount}</div>
-                <div></div>
-              </div>)
-
-            })}
+            <CreatedDate>{props.detail.createdAt.split('T')[0].split('-').join(".")}</CreatedDate>
+            {/* <div>{props.detail.place}</div> */}
+            <CommentsWrap>
+              {props.detail.commentResponseDto.map((el)=>{
+                return (
+                  <CommentInfo key={el.id}>
+                    <ProfileImg src={el.profilePhoto}/>
+                    <div>{el.nickname}</div>
+                    <div>{el.content}</div>
+                    <div onClick={likeHander}>{isLike === true ? <BsHeartFill size="24" color="#ff0000" /> : <BsHeart size="24" />}</div>
+                    <div></div>
+                  </CommentInfo>)
+              })}
+            </CommentsWrap>
           </ModalBody>
+          </div>
 
           <ModalFooter>
             <form onClick={onSubmitHandler}>
@@ -93,14 +105,34 @@ const ModalCon = styled.div`
 `;
 
 const ModalContent = styled.div`
+  padding-top: 15px;
+  padding-bottom: 20px;
   display: flex;
   gap: 10px;
   
+`
+const CreatedDate = styled.div`
+  color: gray;
+  margin-bottom: 15px;
+  font-size: 13px;
+`
+const CommentsWrap = styled.div`
+`
+
+const CommentInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+
 `
 
 const ModalRight = styled.div`
   box-sizing: border-box;
   width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const ModalBox = styled.div`
@@ -114,18 +146,23 @@ const ModalHeader = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
   padding: 0 16px;
+  
 `;
 
+const NickProf = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+`
+
 const ModalFooter = styled.div`
-  /* position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 3%;
-  right: 0;
-  border-top: 0.5px solid grey; */
+
+  border-top: 0.5px solid grey;
 `;
 
 const ModalNick = styled.div`
@@ -133,9 +170,7 @@ const ModalNick = styled.div`
 `;
 
 const ModalBody = styled.div`
-
   border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
   padding: 0 16px;
 `;
 
