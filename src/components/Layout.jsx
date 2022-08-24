@@ -16,7 +16,7 @@ const Layout = () => {
   const detail = useSelector((state) => state.posts.detail);
   const recommend = useSelector((state) => state.posts.newUsers);
 
-  console.log(posts);
+  console.log("Checking post ",posts);
   // console.log(detail);
   // console.log(recommend);
   
@@ -43,6 +43,7 @@ const Layout = () => {
   useEffect(() => {
     dispatch(__getPostsThuck());
     dispatch(__getRecommendThuck());
+    console.log("hello checking")
   }, [dispatch]);
 
   const getDetail = async (id) => {
@@ -64,6 +65,7 @@ const Layout = () => {
 
   return (
     <LayoutWrap>
+      {console.log("This is return ", posts)}
       <CardsWrap>
         {posts.map((el) => {
           return (
@@ -127,7 +129,7 @@ const Layout = () => {
              </>
           );
         })}
-      {console.log("this is render ", selectedContent)}
+      {/* {console.log("this is render ", selectedContent)} */}
       <EditModal editModal={editModal} setEditModal={setEditModal} content={selectedContent} ></EditModal>
       <DetailModal detail={detail} show={detailModal} onClose={() => setDetailModal(false)}/>
       

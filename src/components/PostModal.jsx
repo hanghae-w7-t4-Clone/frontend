@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { __sendPostsThuck } from "../redux/modules/postSlice";
+import { __sendPostsThuck, __getPostsThuck  } from "../redux/modules/postSlice";
 
 import CloseButton from "react-bootstrap/CloseButton";
 
@@ -44,7 +44,8 @@ const PostModal = ({modal2, setModal2, selectedPic }) => {
       })
     )
     setModal2(!modal2);
-
+    // window.location.reload(false);
+    window.location.replace("/posts");
   };
 
   return (
