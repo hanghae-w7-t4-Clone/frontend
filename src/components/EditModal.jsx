@@ -85,8 +85,7 @@ const EditModal = ({ editModal, setEditModal, content }) => {
 
                 <ModalBody>
                   <div>
-                    {/* {console.log("checking text", modalContent)} */}
-                    <TextArea defaultValue={modalEdit.content} type="text" onChange={onChangeHandler}/>
+                    <TextArea rows="10" defaultValue={modalEdit.content} type="text" onChange={onChangeHandler}/>
                   </div>
                 </ModalBody>
               </div>
