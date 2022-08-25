@@ -38,6 +38,7 @@ const SignUp = () => {
         password: member.password,
       })
     );
+    window.location.replace("/");
   };
 
   return (
