@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CloseButton from "react-bootstrap/CloseButton";
+import { FaRegSmile } from "react-icons/fa";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { postCmtThunk } from "../redux/modules/commentSlice";
@@ -25,7 +26,8 @@ const DetailModal = (props) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("Hello checking here !");
+
+
   };
 
   if (!props.show) {
@@ -46,7 +48,7 @@ const DetailModal = (props) => {
           <ModalHeader>
             <NickProf>
               <ProfileImg src={!props.detail.profilePhoto ? defaultProfileImg : props.detail.profilePhoto} alt="modalUserPic" />
-              <ModalNick>{props.detail.nickname}</ModalNick>
+              <ModalNick><b>{props.detail.nickname}</b></ModalNick>
             </NickProf>
             <TbDots/>
           </ModalHeader>
@@ -61,12 +63,14 @@ const DetailModal = (props) => {
             <CommentsWrap>
               {props.detail.commentResponseDto.map((el)=>{
                 return (
+                  
                   <CommentInfo key={el.id}>
-                    <ProfileImg src={el.profilePhoto}/>
-                    <div>{el.nickname}</div>
-                    <div>{el.content}</div>
-                    <div onClick={likeHander}>{isLike === true ? <BsHeartFill size="24" color="#ff0000" /> : <BsHeart size="24" />}</div>
-                    <div></div>
+                    <CommentDiv>
+                      <ProfileImg src={el.profilePhoto}/>
+                      <div><b>{el.nickname}</b></div>
+                      <div>{el.content}</div>
+                    </CommentDiv>
+                    <div onClick={likeHander}>{isLike === true ? <BsHeartFill size="18" color="#ff0000" /> : <BsHeart size="18" />}</div>
                   </CommentInfo>)
               })}
             </CommentsWrap>
@@ -74,10 +78,13 @@ const DetailModal = (props) => {
           </div>
 
           <ModalFooter>
-            <form onClick={onSubmitHandler}>
-              <input type="text" placeholder="코멘트를 작성해주세요" name="comment" value={comment} onChange={onChangeHandler} />
-              <button type="submit">Post</button>
-            </form>
+            <CommentForm onClick={onSubmitHandler}>
+              <BottomDiv>
+                <FaRegSmile size='24'/>
+                <input type="text" placeholder="코멘트를 작성해주세요" name="comment" value={comment} onChange={onChangeHandler} />
+              </BottomDiv>
+              <button type="submit">게시</button>
+            </CommentForm>
           </ModalFooter>
         </ModalRight>
       </ModalBox>
@@ -93,6 +100,12 @@ const ProfileImg = styled.img`
   width: 32px;
   height: 32px;
 `;
+
+const CommentDiv = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`
 const ModalCon = styled.div`
   position: fixed;
   left: 0;
@@ -125,7 +138,7 @@ const CommentInfo = styled.div`
   align-items: center;
   margin-bottom: 20px;
   gap: 10px;
-
+  justify-content: space-between;
 `
 
 const ModalRight = styled.div`
@@ -162,8 +175,36 @@ const NickProf = styled.div`
 `
 
 const ModalFooter = styled.div`
-
   border-top: 0.5px solid grey;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const BottomDiv = styled.div`
+  width: 80%;
+  display: flex;
+  gap: 10px;
+
+  input {
+    width: 100%;
+    border: none;
+  }
+`
+
+const CommentForm = styled.div`
+  margin: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    border: none;
+    background-color: #fff;
+    color: #3baef8;
+    font-weight: bold;
+  }
 `;
 
 const ModalNick = styled.div`

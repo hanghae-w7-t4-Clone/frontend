@@ -43,7 +43,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "#ffffff" }}>
+      <div style={{ backgroundColor: "#fafafa" }}>
         <Container>
           <SignupDiv>
             <div>
@@ -51,7 +51,7 @@ const SignUp = () => {
               <p>친구들의 사진과 동영상을 보려면 가입하세요.</p>
               <button>
                 <FaFacebookSquare style={{ width: "14px", height: "14px" }} />
-                Facebook으로 로그인
+                <span style={{marginLeft:'10px'}}>Facebook으로 로그인</span>
               </button>
             </div>
             <div>
@@ -97,7 +97,7 @@ const SignUp = () => {
           </SignupDiv>
           <Tologindiv>
             <span>계정이 있으신가요?</span>
-            <span onClick={() => {}}>로그인</span>
+            <span onClick={() => {navigate('/')}}>로그인</span>
           </Tologindiv>
           <TodownloadDiv>
             <div>
@@ -119,6 +119,7 @@ export default SignUp;
 
 const SignupDiv = styled.div`
   border: 1px solid #dbdbdb;
+  margin-bottom: 10px;
   div {
     &:first-child {
       display: flex;
@@ -141,6 +142,9 @@ const SignupDiv = styled.div`
         border-radius: 4px;
         width: 82%;
         font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     &:last-child {
@@ -203,6 +207,7 @@ const TodownloadDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fafafa;
   img {
     width: 130px;
   }
@@ -220,7 +225,7 @@ const TodownloadDiv = styled.div`
 
 const Tologindiv = styled.div`
   border: 1px solid #dbdbdb;
-  margin: 10px 0px;
+  margin: 0px 0px;
   padding: 17px 10px;
   display: flex;
   justify-content: space-around;
@@ -236,7 +241,7 @@ const Tologindiv = styled.div`
 `;
 
 const Container = styled.div`
-  width: 23%;
+  width: 350px;
   margin: 30px auto;
   background-color: white;
 `;
