@@ -9,24 +9,42 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { useSelector, useDispatch } from 'react-redux';
 import {postCmtThunk, getCmtThunk} from "../redux/modules/commentSlice";
 
+
 const DeetsModal = (props) => {
 
+    // Getting user's Img & Nickname
+    const myProfileImg = sessionStorage.getItem("profileImg");
+    const myNickname = sessionStorage.getItem("nickname");
+
+    // Using dispatch
     const dispatch = useDispatch();
+
     // Hook 
     const [comment, setComment] = useState("")
 
-    // console.log("Check here ", props)
-
     // Retrieving user profile
     const userProf = useSelector((state) => state.profile);
+    const cmtList = useSelector((state) => state.comment)
+
+    useEffect(() => {
+        getCmtThunk(props.cardId)
+        // console.log("this is useEffect");
+      }, [dispatch]);
     
+    // console.log("Checking props ", props)
+    console.log("Checking getCmt ", cmtList)
+    
+    // OnChange for Comment  
     const onChangeHandler = (e) => {
         setComment(e.target.value)
       };
 
+    // console.log("Checking ", props)
+
+    // Submittion handler for Comment
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        dispatch(postCmtThunk({"cardId":props.id, "content": comment}))
+        dispatch(postCmtThunk({"cardId": props.cardId, "content": comment}))
         console.log("Hello checking here !")
         setComment("")
     };
@@ -38,20 +56,28 @@ const DeetsModal = (props) => {
 
     return (
         <ModalCon>
-                {/* {console.log("Checking " + comment)} */}
+            {/* {console.log("Check getCmt ", cmtList.commentInfo)} */}
             <ModalContent>
                 <ModalLeft>
                     <ModalImg src={props.img} alt="modalPic" />
                 </ModalLeft>
                 <ModalRight>
                     <ModalHeader>
-                        <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
+                        <ImgProf src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
                         <ModalTitle>{userProf.profInfo.nickname}</ModalTitle>
                     </ModalHeader>
-                    <ModalBody>         
-                        <Img src={userProf.profInfo.profilePhoto} alt="modalUserPic" />
-                        <div>코멘트입니다</div>        
-                        <button>삭제</button>  
+                    <ModalBody>  
+                        { cmtList.commentInfo.length !==0 && cmtList.commentInfo.map((cmt) => {
+                            // console.log("Checking cmt ", cmt)
+                            return(
+                                <ImgCon>
+                                <Img src={cmt.profilePhoto} alt="modalUserPic" />
+                                <BodyNic>{cmt.nickname}</BodyNic> 
+                                <BodyCmt>{cmt.content}</BodyCmt>         
+                                </ImgCon>
+                            )
+                        })}       
+ 
                     </ModalBody>
                     <ModalFooter>
                     <form onSubmit={onSubmitHandler}>
@@ -81,8 +107,23 @@ const Img = styled.img`
     display: block;
     border-radius: 50%;
     width: 12%;
+    height: 95%;
+`
+
+const ImgProf = styled.img`
+    display: block;
+    border-radius: 50%;
+    width: 12%;
     height: 100%;
 `
+
+const ImgCon = styled.div`
+    padding: 1%;
+    display: flex;             
+    flex-direction: row;
+    gap: 2%
+`
+
 const ModalCon = styled.div`
     position: fixed;
     left: 0;
@@ -104,7 +145,7 @@ const ModalContent = styled.div`
 
 const ModalHeader = styled.div`
     width: 100%;
-    height: 10%;
+    height: 14%;
     display: flex;
     gap: 3%;
 `;
@@ -118,23 +159,33 @@ const ModalFooter = styled.div`
     border-top: 0.5px solid grey;
 `;
 
-const ModalTitle = styled.h4`
-    font-size: 1.2em;
+const ModalTitle = styled.div`
+    font-size: 0.8em;
 
     margin: 0;
-    float: left;
-    top: 4.5%;
-    left: 19%;
-    position: absolute;
+    /* float: left; */
+    top: 10%;
+    position: relative;
+    font-weight: bold;
 
 `;
 
 const ModalBody = styled.div`
     display: flex;
+    flex-direction: column;
     margin: 1%;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    font-size: 0.8rem;
+    overflow: scroll;
 `;
+
+const BodyNic = styled.div`
+
+`
+const BodyCmt = styled.div`
+    
+`
 
 const ModalLeft = styled.div`
     flex: 45%;

@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from "styled-components";
+
+// Importing components
 import ProfInfo from '../components/ProfInfo'
 import ProfPics from '../components/ProfPics';
-
-
+import Header from "../components/Header";
 
 const Profile = () => {
   return (
     <BodyCon>
+    <Header />
     <ProfInfo></ProfInfo>
     <ProfPics></ProfPics>
     </BodyCon>

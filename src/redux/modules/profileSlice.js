@@ -5,7 +5,7 @@ export const getProfThunk = createAsyncThunk(
     "GET_PROFILE",
     async (payload, thunkAPI) => {
       try {
-        console.log('실행여부 확인용', JSON.stringify(payload))
+        // console.log('실행여부 확인용', JSON.stringify(payload))
         const { data } = await instance.get(`profiles/${payload}`);
         // console.log("Checking getProfileThunk " + JSON.stringify(data.data))
         return thunkAPI.fulfillWithValue(data.data);
