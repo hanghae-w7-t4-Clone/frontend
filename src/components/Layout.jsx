@@ -11,6 +11,7 @@ import DetailModal from "./DetailModal.jsx";
 import UpdateModal from "./UpdateModal.jsx";
 import EditModal from "./EditModal.jsx";
 import { postCmtThunk } from "../redux/modules/commentSlice";
+import { select } from "react-cookies";
 
 const Layout = () => {
   const posts = useSelector((state) => state.posts.posts);
@@ -31,6 +32,7 @@ const Layout = () => {
     content: "",
     id: "",
     imgUrl: "",
+    nickname: ""
   });
 
   // const defalutImg = "https://i.pinimg.com/236x/9d/4c/8a/9d4c8a19d4931f6619afa0f6681d81ba.jpg";
@@ -69,12 +71,34 @@ const Layout = () => {
   const selectedHandler = (el) => {
     // console.log("Checking post content", el)
     // console.log("Checking post imgUrlList ", el.imgUrlList[0])
-    setEditModal(!editModal);
+
     setSelectedContent({
       content: el.content,
+      nickname: el.nickname,
       id: el.id,
       imgUrl: el.imgUrlList[0],
     });
+
+    setEditModal(!editModal);
+
+
+    // if(selectedContent.nickname === sessionStorage.getItem("nickname")){
+    //   setEditModal(!editModal);
+    //   alert("we are same")
+    // }
+    // else{
+    //   return(
+    //     <ModalCon>
+    //       {alert("Not same")}
+    //     <ModalBox>
+    //       <MenuBtn onClick={() => alert("구한중이니다")}>취소</MenuBtn>
+    //       <MenuBtn style={{ color: "red" }} onClick={()=>{alert("구현중입니다.")}}>게시물로 이동</MenuBtn>
+    //     </ModalBox> 
+    //     </ModalCon>
+    //     )
+    // }
+  
+   
   };
 
   return (
@@ -86,6 +110,8 @@ const Layout = () => {
           posts.map((el) => {
             return (
               <>
+                {console.log("checking hook ", selectedContent.nickname)}
+                {console.log("checking session ", sessionStorage.getItem("nickname"))}
                 <Card key={el.id}>
                   <TopWrap>
                     <ProfileImgNickname>
@@ -214,6 +240,37 @@ const Layout = () => {
   );
 };
 export default Layout;
+
+const ModalCon = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalBox = styled.div`
+  width: 300px;
+  /* height: 200px; */
+  background-color: #fff;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  gap: 20px;
+`;
+
+const MenuBtn = styled.button`
+  border: none;
+  width: 100%;
+  background-color: #fff;
+`;
 
 const LayoutWrap = styled.div`
   display: flex;

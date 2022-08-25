@@ -103,7 +103,6 @@ const DeetsModal = (props) => {
 
 export default DeetsModal;
 
-
 const DeetsBtn = styled.button`
     background: none;
     color: #4d95f5;

@@ -26,8 +26,6 @@ const DetailModal = (props) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-
   };
 
   if (!props.show) {
@@ -214,7 +212,6 @@ const ModalNick = styled.div`
 const ModalBody = styled.div`
   border-top: 1px solid #eee;
   height: 400px;
-  background-color: pink;
   padding: 0 16px;
   overflow-y: auto
 `;
