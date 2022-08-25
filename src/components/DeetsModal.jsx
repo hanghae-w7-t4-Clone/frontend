@@ -114,7 +114,7 @@ const ImgProf = styled.img`
     display: block;
     border-radius: 50%;
     width: 12%;
-    height: 100%;
+    height: 80%;
 `
 
 const ImgCon = styled.div`
@@ -128,8 +128,6 @@ const ModalCon = styled.div`
     position: fixed;
     left: 0;
     top: 0;
-    right: 0;
-    bottom: 0;
     background-color: rgba(0,0,0,0.5);
     display: flex;
     align-items: center;
@@ -138,7 +136,7 @@ const ModalCon = styled.div`
 
 const ModalContent = styled.div`
     width: 70%;
-    height: 70%;
+    /* height: 70%; */
     background-color: #fff;
     display: flex;
 `;
@@ -171,13 +169,15 @@ const ModalTitle = styled.div`
 `;
 
 const ModalBody = styled.div`
-    display: flex;
+    display: block;
     flex-direction: column;
-    margin: 1%;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    background-color: pink;
     font-size: 0.8rem;
-    overflow: scroll;
+    overflow: auto;
+    height: 300px;
+    width: 100%
 `;
 
 const BodyNic = styled.div`

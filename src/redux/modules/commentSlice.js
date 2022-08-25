@@ -57,7 +57,6 @@ const profileSlice = createSlice({
     //PostCommet
     [postCmtThunk.fulfilled]: (state, action) => {
       // console.log("checking here " + JSON.stringify(action.payload))
-      console.log("Checkig postCmtThunk ", action.payload)
       state.commentInfo.push(action.payload)
       // state.commentInfo = action.payload;
     },
