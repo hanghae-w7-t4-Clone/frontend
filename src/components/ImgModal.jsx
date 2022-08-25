@@ -175,7 +175,6 @@ const ImgBtn = styled.button`
   width: 135px;
   height: 30px;
   border: none;
-  border: none;
   background: none;
   color: #4d95f5;
   font-weight: bold;

@@ -81,14 +81,14 @@ const DeetsModal = (props) => {
                     </ModalBody>
                     <ModalFooter>
                     <form onSubmit={onSubmitHandler}>
-                        <input 
+                        <DeetsInput 
                             type="text"
                             placeholder="코멘트를 작성해주세요"
                             name="comment"
                             value={comment}
                             onChange={onChangeHandler}
                         /> 
-                        <button type="submit">Post</button>
+                        <DeetsBtn type="submit">Post</DeetsBtn>
                     </form>
                     </ModalFooter>
                 </ModalRight>
@@ -103,31 +103,46 @@ const DeetsModal = (props) => {
 
 export default DeetsModal;
 
+
+const DeetsBtn = styled.button`
+    background: none;
+    color: #4d95f5;
+    font-weight: bold;
+    border: none;
+`
+
+const DeetsInput = styled.input`
+    width: 85%;
+    border: none
+`;
+
 const Img = styled.img`
     display: block;
     border-radius: 50%;
     width: 12%;
     height: 95%;
-`
+`;
 
 const ImgProf = styled.img`
     display: block;
     border-radius: 50%;
     width: 12%;
     height: 80%;
-`
+`;
 
 const ImgCon = styled.div`
     padding: 1%;
     display: flex;             
     flex-direction: row;
     gap: 2%
-`
+`;
 
 const ModalCon = styled.div`
     position: fixed;
     left: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0,0,0,0.5);
     display: flex;
     align-items: center;
@@ -173,7 +188,6 @@ const ModalBody = styled.div`
     flex-direction: column;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    background-color: pink;
     font-size: 0.8rem;
     overflow: auto;
     height: 300px;
