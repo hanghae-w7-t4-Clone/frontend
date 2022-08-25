@@ -383,11 +383,12 @@ const RipleCnt = styled.div`
   font-size: 13px;
   padding: 6px 12px 6px 12px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 const RiplePost = styled.div`
   display: flex;
-  flex-direction: column;
-  /* align-items: center; */
+  /* flex-direction: column; */
+  align-items: center;
   gap: 10px;
   padding: 6px 12px 6px 12px;
 
@@ -451,6 +452,7 @@ const RightBarMid = styled.div`
   margin: 15px 0px 15px 12px;
 `;
 const RightBarList = styled.div``;
+
 const Recommended = styled.div`
   display: flex;
   justify-content: space-between;
