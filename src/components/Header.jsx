@@ -36,7 +36,7 @@ const Header = () => {
     <>
       <HeaderWrap>
         <NavWrapper>
-          <Logo onClick={() => navigate("/")} src="img/logo.PNG" alt="" />
+          <Logo onClick={() => navigate("/posts")} src="img/logo.PNG" alt="" />
           <SearchBox type="text" placeholder="검색" />
           <RightBar>
             <IconWrap>
