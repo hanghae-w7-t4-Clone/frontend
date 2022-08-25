@@ -39,7 +39,7 @@ const ProfPics = () => {
   	// console.log("Checking useSelector in ProfPics " + JSON.stringify(userProf))
     // console.log(userProf.map((e) => e))
 	const imgClick = (imgSrc) => {
-		console.log("Checking ", imgSrc)
+		// console.log("Checking ", imgSrc)
 		// console.log("Checking imgSrc " + JSON.stringify(imgSrc))
 		setSelectedProfPics({selectedCardId: imgSrc.id, selectedImgSrc: imgSrc.imgUrlList[0]});
 		dispatch(getCmtThunk(imgSrc.id))
@@ -52,7 +52,6 @@ const ProfPics = () => {
 	<MainCon>
 
 		<GallCon>
-			{console.log("Checking")}
             { userProf.map((e) => {
                 // console.log("Checking return "+ JSON.stringify(e))
                 // console.log(e.imgUrlList[0])

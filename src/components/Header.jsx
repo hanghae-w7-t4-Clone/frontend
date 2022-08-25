@@ -35,7 +35,7 @@ const Header = () => {
           <SearchBox type="text" placeholder="검색" />
           <RightBar>
             <IconWrap>
-              <Icon src="img/home.PNG" alt="" />
+              <Icon onClick={() => navigate("/posts")} src="img/home.PNG" alt="" />
               <Icon src="img/messenger.PNG" alt="" />
               <Icon
                 src="img/add.PNG"
