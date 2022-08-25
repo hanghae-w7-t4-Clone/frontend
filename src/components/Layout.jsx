@@ -297,7 +297,7 @@ const ProfileImgBig = styled.img`
 
 const NickConstentWrap = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   padding: 0 12px 0 12px;
   gap: 10px;
