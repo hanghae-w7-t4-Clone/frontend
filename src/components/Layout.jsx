@@ -157,6 +157,21 @@ const Layout = () => {
                     <RiplePost>
                       {el.commentResponseDto.length === 0 ? (
                         ""
+                      ) : el.commentResponseDto.length > 1 ? (
+                        <>
+                          <div>
+                            <span>
+                              <b>{el.commentResponseDto[0].nickname}</b>
+                            </span>
+                            <span>{el.commentResponseDto[0].content}</span>
+                          </div>
+                          <div>
+                            <span>
+                              <b>{el.commentResponseDto[1].nickname}</b>
+                            </span>
+                            <span>{el.commentResponseDto[1].content}</span>
+                          </div>
+                        </>
                       ) : (
                         <>
                           <span>
@@ -354,7 +369,7 @@ const ProfileImgBig = styled.img`
 
 const NickConstentWrap = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   padding: 0 12px 0 12px;
   gap: 10px;
@@ -365,12 +380,18 @@ const RipleCnt = styled.div`
   height: 18px;
   font-size: 13px;
   padding: 6px 12px 6px 12px;
+  margin-bottom: 10px;
 `;
 const RiplePost = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  /* align-items: center; */
   gap: 10px;
   padding: 6px 12px 6px 12px;
+
+  span {
+    margin-right: 10px;
+  }
 `;
 const PostDate = styled.div`
   display: flex;
@@ -438,4 +459,3 @@ const RightBarBottom = styled.div`
   font-size: 13px;
   margin: 30px 0px 15px 12px;
 `;
-
