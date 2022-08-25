@@ -5,6 +5,11 @@ import styled from "styled-components";
 import ImgModal from "./ImgModal";
 import PostModal from "./PostModal";
 
+import { BsPersonCircle, BsBookmark } from "react-icons/bs";
+import { FiSettings } from "react-icons/fi";
+import { GrPowerCycle } from "react-icons/gr";
+
+
 const Header = () => {
   const navigate = useNavigate();
 
@@ -59,9 +64,12 @@ const Header = () => {
                 navigate("/profile");
               }}
             >
-              프로필
+              <BsPersonCircle/>프로필
             </li>
-            <li style={{borderTop:'1px solid gray'}} onClick={logOut}>로그아웃</li>
+            <li onClick={()=> alert("서비스 준비 중")}><BsBookmark/>저장됨</li>
+            <li onClick={()=> alert("서비스 준비 중")}><FiSettings/>설정</li>
+            <li onClick={()=> alert("서비스 준비 중")}><GrPowerCycle/>계정전환</li>
+            <li style={{borderTop:'1px solid gray', padding:'16px 10px 0 10px'}} onClick={logOut}>로그아웃</li>
           </ToggleList>
         ) : null}
         </NavWrapper>
@@ -145,13 +153,18 @@ const ToggleList = styled.ul`
   list-style-type: none;
   position: absolute;
   right: 0px;
-  top: 70px;
+  top: 55px;
   width: 230px;
   background-color: #FFFFFF;
   border-radius: 5px;
 
   li {
     cursor: pointer;
-    margin: 16px 8px;
+    margin: 16px 0;
+    padding: 0 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
   }
 `;
