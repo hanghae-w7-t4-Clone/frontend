@@ -383,6 +383,7 @@ const RipleCnt = styled.div`
   font-size: 13px;
   padding: 6px 12px 6px 12px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 const RiplePost = styled.div`
   display: flex;
