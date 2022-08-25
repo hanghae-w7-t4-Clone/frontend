@@ -220,12 +220,12 @@ const Layout = () => {
           {recommend.map((el) => {
             return (
               <Recommended key={el.id}>
-                <RiplePost>
+                <SideBarNicks>
                   <ProfileImg src={el.profilePhoto} alt="" />
                   <span>
                     <b>{el.nickname}</b>
                   </span>
-                </RiplePost>
+                </SideBarNicks>
                 <BlueBtn>팔로우</BlueBtn>
               </Recommended>
             );
@@ -385,7 +385,7 @@ const RipleCnt = styled.div`
   margin-bottom: 10px;
   cursor: pointer;
 `;
-const RiplePost = styled.div`
+const SideBarNicks = styled.div`
   display: flex;
   /* flex-direction: column; */
   align-items: center;
@@ -396,6 +396,19 @@ const RiplePost = styled.div`
     margin-right: 10px;
   }
 `;
+
+const RiplePost = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 10px;
+  padding: 6px 12px 6px 12px;
+
+  span {
+    margin-right: 10px;
+  }
+`;
+
 const PostDate = styled.div`
   display: flex;
   align-items: center;
