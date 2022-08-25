@@ -174,10 +174,12 @@ const Layout = () => {
                         </>
                       ) : (
                         <>
+                        <div>
                           <span>
                             <b>{el.commentResponseDto[0].nickname}</b>
                           </span>
                           <span>{el.commentResponseDto[0].content}</span>
+                        </div>
                         </>
                       )}
                     </RiplePost>
