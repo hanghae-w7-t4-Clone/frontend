@@ -1,4 +1,4 @@
-# Instargram clon ## Frontend
+# Instargram clone ## Frontend
 
 인스타그램 클론 
 
@@ -69,7 +69,6 @@
 ```
       
 ## 추가할 기능
-### 3. 페이지 reload 를 통해서만 data 업데이트
 ```
   * 태그 기능 
   * 팔로우 기능
@@ -78,7 +77,3 @@
   * 프로필 수정, 사진 삭제
   * 그외..
 ```
-    
-    
-    
-    ![header](https://capsule-render.vercel.app/api?text=4조화이팅!&fontColor=d6ace6)
