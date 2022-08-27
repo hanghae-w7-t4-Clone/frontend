@@ -68,7 +68,7 @@
     - extra-reducer 로 통해 intial-state 를통해 해당 프로필 component 를 render 시켜 해결함!
 ```
       
-## 추가할 기능
+## 4. 추가할 기능
 ```
   * 태그 기능 
   * 팔로우 기능
